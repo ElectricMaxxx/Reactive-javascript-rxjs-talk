@@ -71,11 +71,115 @@ Doch nun ...
 
 ## An die Bar
 
-Die Akteure:
-* Iterator Pattern
-* * Grafik mit Erklärung
-* * Beispiele mit .map() + .reduce() + .filter()
-* * -> push basiert
+Ich möchte euch kurz die Akteure vorstellen:
+* Das `Iterator Pattern` => `TODO: UML Image` beschreibt einen Einheitlichen Umgang mit Array, Collects oder
+oder ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
+
+```javascript
+var List = (function () {
+    var index = 0,
+        data = [1, A, 3, B, 5],
+        length = data.length;
+    return {
+        next: function () {},
+        hasNex: function () {},
+        rewind: function () {},
+        current: function () {}
+    }
+})();
+
+while (List.hasNext()) {
+    console.log(List.next());
+}
+```
+
+Die Methoden sind natürlich noch sinnvoll zu implementieren. Aber man sollte eine Ausgabe in der Form erhalten:
+
+```
+> 1
+> A
+> 3
+> B
+> 5
+```
+
+Das Handling von Collections wird aber nicht nur durch das Iterator Pattern bestimmt. So lassen sich auf
+solchen Listen auch wunderbar Queries durch `Functional Programming` absetzen. Stellen wir uns mal folgende
+Aufgabe vor: `Liste von Filmen => trage id + title von Filmen mit Rating 5.0 zusammen` Das könnte so auf 
+einem onDemand System a la Netflix passieren. Das heißt wir haben eine Liste wie:
+
+```javascript
+ var videos = [
+     {
+         id: 100001,
+         title: 'Kill Bill 1',
+         'url': '..',
+         rating: 5.0
+     },
+     {
+         id: 100002,
+         title: 'Kill Bill 2',
+         'url': '..',
+         rating: 5.0
+     },
+     {
+         id: 100003,
+         title: 'Titanic',
+         'url': '..',
+         rating: 1.0
+     }
+ ];
+```
+
+Wir könnten jetzt wie folgt vorgehen:
+
+```javascript
+var newList = [];
+for(var i = 0; i <= videos.length; i++) {
+    if (videos[i].rating === 5.0) {
+        newList.push({id: videos[i].id, title: videos[i].title})
+    }
+}
+
+console.log(newList);
+```
+
+ein wenig besser wäre vielleicht:
+
+```javascript
+var newList = [];
+
+videos.forEach(function (video) {
+    newList.push({id: video.id, title: video.title})
+});
+
+console.log(newList);
+```
+
+Doch wie wäre es mit?
+
+```javascript
+var newList =
+    videos
+        .reduce(function (video) {
+            return video.rating === 5.0;
+        })
+        .map(function (video) {
+           return  {id: video.id, title: video.title};
+        });
+
+console.log(newList);
+```
+
+Wir arbeiten hier jetzt mit einer Filter-Funktion (reduce) und einer Projektion (map)
+mit der dann die Richtigen Werte generiert werden.
+
+TODO klären ab wann und wo die funktionen vorhanden sind => #1
+
+Was dieses Vorghen aumacht: Es ist Pull basiert. Das heißt Werte, die man haben will holt man sich aus der
+Liste und eben nur genau die.
+
+
 * Observer Pattern
 * Grafik mit Erklärung
 * Beispiele? @Jowe ping: Angular databinding ist pub-sub, right?
