@@ -73,9 +73,9 @@ Doch nun ...
 
 Die Akteure:
 * Iterator Pattern
-** Grafik mit Erklärung
-** Beispiele mit .map() + .reduce() + .filter()
-** -> push basiert
+* * Grafik mit Erklärung
+* * Beispiele mit .map() + .reduce() + .filter()
+* * -> push basiert
 * Observer Pattern
 * Grafik mit Erklärung
 * Beispiele? @Jowe ping: Angular databinding ist pub-sub, right?
@@ -100,26 +100,27 @@ ihren Pferden spielt und der Lausebub sich gern mit seinen Kumpels rauft. Die Ge
 Realität lasse ich jetzt einmal offen. Die Eigenschaften möchte ich euch jetzt einmal schnell an kurzen
 Schnipseln demonstrieren. Wie versprochen werde ich die Slides natürlich zugänglich machen. D.h. damit hat
 man dann auch eine gute Zusammenfassung der wichtigsten Funktionen
+
 * Observer
-** Eigenschaften/Funktionen
-** .subscribe()
-** .dispose() - IDisposable, why?
+* * Eigenschaften/Funktionen
+* * .subscribe()
+* * .dispose() - IDisposable, why?
 * Observable
-** Eigenschaften/Operatoren
-** Erstellung
-*** create
-*** from
-*** fromEvent
-*** range
-** Kombinationen
-**v concat
-*** merge
-** Projektionen
-*** map
-*** flatMap
-** Filter
-*** filter
-** Das Kuckukskind - Subject
+* * Eigenschaften/Operatoren
+* * Erstellung
+* * * create
+* * * from
+* * * fromEvent
+* * * range
+* * Kombinationen
+* * * concat
+* * * merge
+* * Projektionen
+* * * map
+* * * flatMap
+* * Filter
+* * * filter
+* * Das Kuckukskind - Subject
 * Warum keine Promises?
 
 
