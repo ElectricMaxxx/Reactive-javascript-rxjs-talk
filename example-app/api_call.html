@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Api call</title>
+</head>
+<body>
+<div class="container">
+    <input type="text" id="input"/>
+
+    <h2>
+        Results
+    </h2>
+    <div id="results">
+
+    </div>
+</div>
+<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.8/rx.all.js"></script>
+<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+
+<script type="application/javascript">
+    var $input = $('#input');
+    var $results = $('#results');
+
+    var suggestions = Rx.Observable.fromEvent($input, 'keyup')
+        .pluck('target', 'value')
+        .filter(function(text) { return text.length > 2 })
+        .debounce(500 /* ms */)
+        .distinctUntilChanged()
+        .flatMapLatest(function (term) {
+            return $.ajax({
+                url: 'https://en.wikipedia.org/w/api.php',
+                dataType: 'jsonp',
+                data: {
+                    action: 'opensearch',
+                    format: 'json',
+                    search: term
+                }
+            }).promise();
+        })
+        .subscribe(
+            function(data) {
+                $results
+                    .empty()
+                    .append($.map(data[1], function (value) {
+                        return $('<li>').text(value);
+                    }))
+            },
+            function(error) {
+                $results
+                    .empty()
+                    .append($('<li>'))
+                    .text('Error:' + error);
+            }
+        );
+</script>
+</body>
+</html>

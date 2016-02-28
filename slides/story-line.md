@@ -691,13 +691,97 @@ oder mergen. Besteht der Stream dann eh nur aus einem Wert, so kann man kann man
 wieder in ein Promise zurück transformieren.
 
 
-## Wir bauen ein Beispiel
-* Autocomplete mit Wikipedia API Request
-* Wie im WebExample
+So nun wollen wir doch mal Famile RxJS in Aktion sehen ...
 
-ToDo:
-* Ausformulieren von einzelnen Punkten
-* Noch erwähnen: 
+## API Call auf Wikipedia
+
+... Wir wollen für Familie RxJS jetzt noch eine kleine Application umsetzen mit sie in windeseile mal eben die API
+von Wikipedia anpingen können. Dabei soll mit Hilfe eines Inputfeldes auf jedem keyup ein ein Request auf Wikipedia
+abgesetzt werden wenn,  im Input mehr als 3 Buchstaben eingegeben wurden. Die Titel der Ergebnisse werden dann in
+einer Liste dargestellt.
+
+Bauen wir uns dazu erst einmal ein klein wenig HTML zusammen:
+
+```html
+<input type="text" id="input"/>
+
+<h2>
+Results
+</h2>
+<div id="results">
+
+</div>
+```
+
+Ich fange jetzt nicht an das in irgendeiner Art und Weise zu stylen - kann ich eh nicht. Wir starten erst einmal damit
+die keyups im Input zu sammeln:
+
+```javascript
+    var $input = $('#input');
+    var $results = $('#results');
+
+    var suggestions = Rx.Observable.fromEvent($input, 'keyup');
+``` 
+
+Darauf könnte man sich jetzt auch schon subscriben und mit den Werten arbeiten, die hier kommen. Doch wir wollen nur
+wollen nur arbeiten, wenn der String schon länger als 2 Zeichen ist. Also:
+
+``` javascript
+var suggestions = Rx.Observable.fromEvent($input, 'keyup')
+        .pluck('target', 'value')
+        .filter(function(text) { return text.length > 2 })
+        .debounce(500 /* ms */)
+        .distinctUntilChanged();
+```
+
+Dazu wird der Input der Werte im Stream noch um eine halbe Sekunde verzögert und wir lassen nur distinkte Werte zu. Soo
+das sieht doch schon noch besser aus. Die Werte können wir uns doch jetzt abgreifen und damit ein Request auf die API
+fahren oder? Nein noch nicht! Wie wäre es denn wenn wir AJAX Request mit in den Stream einfließen ließen? `.flatMap()`
+wäre da doch schon eine gute Idee, wir nehmen hier nur lieber gleich `.flatMapLatest()` um nur auf den letzten Wert
+zuzugreifen. Der Operator könnte dann ja so aussehen:
+
+```javascript
+    ...
+    flatMapLatest(function (term) {
+            return $.ajax({
+                url: 'https://en.wikipedia.org/w/api.php',
+                dataType: 'jsonp',
+                data: {
+                    action: 'opensearch',
+                    format: 'json',
+                    search: term
+                }
+            }).promise();
+        });
+```
+
+Wir feuern hier gleich den Request ab und verwenden den Promise Ausgang von $.ajax(). flatMap macht daraus wieder ein 
+Observalbe und gibt dann dieses Objekt im Stream weiter. Und genau das wollen wir, denn jetzt können wir uns direkt
+auf das Ergebnis subscriben und ein wenig am DOM rum spielen, um das Ergebnis darzustellen:
+
+```javascript
+    ...
+    .subscribe(
+        function(data) {
+            $results
+                .empty()
+                .append($.map(data[1], function (value) {
+                    return $('<li>').text(value);
+                }))
+        },
+        function(error) {
+            $results
+                .empty()
+                .append($('<li>'))
+                .text('Error:' + error);
+        }
+    );
+```
+
+Hier hängen wir jetzt nur noch die Ergebnisse, oder auch den Fehler, in eine zuvor gelehrte Liste ein. Das können wir
+uns dann auch mal ganz anschauen => Browser => jsfidle => show Result + Console
+
+So nun haben ich euch eine ganze Stunde in die Geschichte der Familie RxJS mitgenommen. Gibt es dazu Fragen?
+
 ** Scheduler
 ** Subject -> Guidline
-** All together
