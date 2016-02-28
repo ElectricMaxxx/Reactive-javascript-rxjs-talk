@@ -72,7 +72,7 @@ Doch nun ...
 ## An die Bar
 
 Ich möchte euch kurz die Akteure vorstellen:
-* Das `Iterator Pattern` => `TODO: UML Image` beschreibt einen Einheitlichen Umgang mit Array, Collects oder
+* Das `Iterator Pattern` => `TODO: UML Image = > #2` beschreibt einen Einheitlichen Umgang mit Array, Collects oder
 oder ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
 
 ```javascript
@@ -179,22 +179,40 @@ TODO klären ab wann und wo die funktionen vorhanden sind => #1
 Was dieses Vorghen aumacht: Es ist Pull basiert. Das heißt Werte, die man haben will holt man sich aus der
 Liste und eben nur genau die.
 
+Neben dem Iterator Pattern ging es ja auch um das `Observer Pattern` => `Todo: Image => #3`. Dieses beschreibt die Verbindung zwischen 
+einem Beobachteten Objekt und seinen Beobachtern. Dabei wird wohl eher ein bestimmter Status-Wechsel beobachtet
+als das Objekt an sich. Bei dem beobachteten Object spricht man von dem Subject oder besser Observable 
+(engl. beobachtet). Dieses stellt eine methode zum subscriben berereit. Das heißt ein Beobachter - auch 
+Observer genannt - registriert sich und meldet interesse an Status Wechseln an. Damit der Observable den Observer
+über Änderungen informieren kann, muss dieser eine Methode zum Mitteilen implementieren (bspw. notify()).
+Der Observable sollte dann natürlich auch eine Methode zum unsubscriben bereithalten damit der Observer
+seine Registrierung auch wieder Rückgängig machen kann.
 
-* Observer Pattern
-* Grafik mit Erklärung
-* Beispiele? @Jowe ping: Angular databinding ist pub-sub, right?
-* Entkoppelt
+`Was bringt einem das ganze?`. `Entkopplung` Man verhindert dann doch all zu prozedualen Code. 
+Dem Observable muss es nicht interessieren wer da in der Leitung hängt - Hauptsache er kann jedem seine Änderung
+mitteilen. Als Observer kann ich mich ganz auf die Reaktion zu gegebenen Events konzentrieren. Nun sind
+wir bei `Events`. Diese sind im Web Context das Mittel der Wahl um Informationen vom Observable zum 
+Observer zu übermitteln. So implementieren wir sog. Event Handler, also Callback-Funktionen, um auf
+Ereignisse im Browser reagieren zu können. Wir haben ja vorhin schon ein Beispiel dazu gesehen.
 
-Doch dann ..
+Nun kommt es wie es kommen musste. Der Abend in der Bar war zu schön. Beide Pattern lernten sich näher kennen
+und es kam zur ...
 
 ## Die Hochzeit
-* Der gemeinsame Name - Rx - Reactive Extensions
-* Warum Plural?
-* Übersicht verschiedene Implementierungen
-* ...
-* The JavaScript Way -  RxJS
 
-Es folgen wie es auch kommen muss ...
+... Sie entschieden sich dazu als sog. `Reactive Extensions` gemeinsame Wege zu gehen. Doch warum `Plural?`
+Nun es gibt verschiedene Implementierungen:
+* RxJava
+* <b>RxJS</b>
+* Rx.Net
+* Rx.Scala
+* Rx.Clojure
+* Rx.Swift
+* und viele mehr
+
+Wenn man sich einen Überblick verschaffen will sollte man mal die Website `http://reactivex.io/` besuchen
+oder man wirft ein Blick in die Github Organisation unter der alles zusammen gefasst ist:
+`https://github.com/Reactive-Extension`
 
 ## Gemeinsamme Kinder
 
