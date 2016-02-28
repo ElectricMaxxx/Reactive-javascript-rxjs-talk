@@ -316,11 +316,98 @@ Die Reihenfolge ist dabei `onNext, onError, onCompleted`
 Damit hat jeder Observer für sich allein die Möglichkeit Werte aus dem Stream abzugreifen und auf Fehler zu reagieren.
 Dabei beeinflusst er andere Subscriber nicht:
 
+```javascript
+var source = Rx.Observable.range(1,10);
 
-* Observervable:
-* * Eigenschaften/Funktionen
-* * .subscribe()
-* * .dispose() - IDisposable, why?
+var reducedSource = source.filter(function (value) {
+	return value % 2 === 0;
+});
+
+var disposal1 = reducedSource.subscribe(
+  function (x) {
+        console.log('Next 1: ' + x);
+    },
+    function (err) {
+        console.log('Error 1: ' + err);
+    },
+    function () {
+        console.log('Completed 1.');
+    });
+
+disposal1.dispose();
+
+var disposal2 = source.subscribe(
+function (x) {
+        console.log('Next 2: ' + x);
+    },
+    function (err) {
+        console.log('Error 2: ' + err);
+    },
+    function () {
+        console.log('Completed 2');
+    });
+disposal2.dispose();
+```
+
+(Hint: auf Slides verteilen)
+
+In der Console sieht man dann:
+
+```
+> Next 1: 2
+> Next 1: 4
+> Next 1: 6
+> Next 1: 8
+> Next 1: 10
+> Completed 1.
+> Next 2: 1
+> Next 2: 2
+> Next 2: 3
+> Next 2: 4
+> Next 2: 5
+> Next 2: 6
+> Next 2: 7
+> Next 2: 8
+> Next 2: 9
+> Next 2: 10
+> Completed 2
+```
+
+Damit das Observable Object erst einmal grundlegend funktioniert benötigt es
+ein `subscribe()` Methode ...
+
+```javascript
+/**
+ * Defines a method to release allocated resources.
+ */
+function Disposable() { }
+
+/**
+ * Performs application-defined tasks associated with freeing, releasing, or resetting resources.
+ */
+Disposable.prototype.dispose = function () { ... }
+
+/**
+ * Defines a provider for push-based notification.
+ */
+function Observable() { }
+
+/**
+ * Notifies the provider that an observer is to receive notifications.
+ *
+ * @param {Observer} observer The object that is to receive notifications.
+ * @returns {Disposable} A reference to disposable that allows observers to stop receiving notifications before the provider has finished sending them.
+ */
+Observable.prototype.subscribe = function (observer) { ... }
+```
+
+.. wie man hier erkennen kann dient diese nicht nur zum registrieren auf einem Stream
+sondern liefert gleich ein `Disposable` Objekt zurück. Mit diesen kann man sich dann
+auch wieder ganz einfach Abmelden. Damit erhällt man auch keine Notifications mehr.
+Der `subscribe()` Methode übergibt mein den Observer. Das kann entweder ein Objekt
+nach dem vorhin definierten Interface sein, oder man übergibt einfach alle drei 
+Funktionen einzeln als Callbacks. Zumindest die `onNext()` muss übergeben werden sonst
+macht das ganze Registrieren keinen Sinn mehr.
 
 Nun waren die Kids echt so cool, dass beide Eltern begannen anderen Eltern von ihnen zu erzählen. Und da man
 das heute wohl so als stolze Eltern macht, wurde ein eigner Youtube-Channel eingerichtet ...
