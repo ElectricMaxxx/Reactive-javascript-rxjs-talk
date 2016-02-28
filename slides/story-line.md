@@ -676,13 +676,19 @@ Es gibt noch viele weitere Operatoren um auf den Observalbes zu arbeiten. Eine g
 Zusmmenfassung findet man nach Kategorien getrennt unter
 `https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/categories.md`
 
-
 * * Das Kuckukskind - Subject => erst mal aus lassen, schauen wo ich zeitlich lande
 
-
-* Warum keine Promises?
-* * Single Values
-* * Cancellation?
+Nun noch zu einem kontroversen Thema. Inzwischen verwenden eine Vielzahl von JavaScript-Familien
+`Promises` um mit asynchronen Aufgaben umgehen zu können. Doch warum kommt jetzt Famile RxJS mit etwas neum daher?
+Wir haben uns doch gerade erst daran gewöhnt. 
+Es gibt zwei Gründe dafür. Zum einem geht es bei Streams um `Mehrere Werte` während bei Promisses immer nur der eine 
+Datensatz kommt, den man beispielsweise gerade per AJAX angefragt hat. Außerdem fehlt den Promisses die Möglichkeit die
+Registrierung auf die Antwort abzubrechen. Oder habt ihr schon man in während des Wartens auf eine Ajax Response dem
+Server gesagt - nee will es jetzt doch nicht mehr haben?
+Wer aber doch Promisses verwenden will und daraus Obserables bauen will, dem bietet sich eine `.fromPromise()` Methode.
+Diese lässt zwar dann auch nur einen Wert an den Observer durch. Man könnte diesen aber mit anderen Streams concatenieren
+oder mergen. Besteht der Stream dann eh nur aus einem Wert, so kann man kann man den Observer dann mit `.toPromise()`
+wieder in ein Promise zurück transformieren.
 
 
 ## Wir bauen ein Beispiel
