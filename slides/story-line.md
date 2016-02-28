@@ -201,34 +201,136 @@ und es kam zur ...
 ## Die Hochzeit
 
 ... Sie entschieden sich dazu als sog. `Reactive Extensions` gemeinsame Wege zu gehen. Doch warum `Plural?`
-Nun es gibt verschiedene Implementierungen:
+Nun, ... es gibt verschiedene Implementierungen:
 * RxJava
 * <b>RxJS</b>
 * Rx.Net
 * Rx.Scala
 * Rx.Clojure
 * Rx.Swift
-* und viele mehr
+* ...
 
 Wenn man sich einen Überblick verschaffen will sollte man mal die Website `http://reactivex.io/` besuchen
 oder man wirft ein Blick in die Github Organisation unter der alles zusammen gefasst ist:
-`https://github.com/Reactive-Extension`
+`https://github.com/Reactive-Extension`. Doch was mach diese Vereinigung nun aus? Mit Rx kann sich ein 
+Observer nun auf einen `Stream von Events` subscriben. Um diesen Stream zu begrenzen werden von den Observables
+Operatoren bereit gestellt, den Stream für ein Observer manipulieren oder filtern können. Aus
+```javascript
+var list = [1, 2, 3, 4, 5];
+
+list.forEach(function (item) {
+    console.log("nexItem: %s", item);
+});
+```
+
+wird jetzt
+
+```javascript
+var list = [1, 2, 3, 4, 5];
+
+// create an observable
+var source = Rx.Observable.fromArray(list);
+
+//subscribe an observer
+var disposal = source.subscribe(
+    function (x) {
+        console.log('Next: ' + x);
+    },
+    function (err) {
+        console.log('Error: ' + err);
+    },
+    function () {
+        console.log('Completed');
+    });
+
+// unsubscribe
+disposal.dispose();
+```
+Das sieht jetzt ein wenig mehr Schreibarbeit für die Ausgabe eines Arrays aus. 
+Aber stellen wir uns einmal vor, das wären jetzt Push Notifications aus einer WebSocket
+Verbindung oder Informationen aus dem Mouse-Move-Events, wie sie vorhin gebaut haben. Zu den genaueren 
+Vorgängen komme ich im Anschluss.
+Ja was folgt im Anschluss an eine Hochzeit. Ja ? ...
 
 ## Gemeinsamme Kinder
 
-Nach der schönen Hochzeit und den Flitterwochen stand relativ kurz nacheinander die Geburt zweier Kids
-an. Beide haben ihre eigenen Eigenschaften und Funktionen. So wie die kleine Prizessin daheim lieber mit 
+... Die Flitterwochen waren noch nicht einmal ganz vorüber, da standen relativ kurz nacheinander
+die Geburt zweier Kids an. Beide haben ihre eigenen Eigenschaften und Funktionen. So wie die kleine Prizessin daheim lieber mit 
 ihren Pferden spielt und der Lausebub sich gern mit seinen Kumpels rauft. Die Geschlechterzuweisung in der
 Realität lasse ich jetzt einmal offen. Die Eigenschaften möchte ich euch jetzt einmal schnell an kurzen
-Schnipseln demonstrieren. Wie versprochen werde ich die Slides natürlich zugänglich machen. D.h. damit hat
-man dann auch eine gute Zusammenfassung der wichtigsten Funktionen
+Schnipseln demonstrieren. Ich werde die Slides natürlich zugänglich machen. D.h. damit hat
+man dann auch eine gute Zusammenfassung der wichtigsten Funktionen.
 
-* Observer
+Wenn der Observer, wie obn im Beispiel nicht nur aus Callbacks, besteht, also so ...
+
+```javascript
+var disposal = source.subscribe(
+    function (x) {
+        console.log('Next: ' + x);
+    },
+    function (err) {
+        console.log('Error: ' + err);
+    },
+    function () {
+        console.log('Completed');
+    }
+);
+```
+
+... sollte er Methoden implementieren, die vom Observalbe Object aufgeufn werden können um über neue Werte, 
+über einen Fehler oder über das Ende zu informieren:
+
+```javascript
+/**
+ * Provides a mechanism for receiving push-based notifications.
+ */
+function Observer() { }
+
+/**
+ * Provides the observer with new data.
+ *
+ * @param {Any} value The current notification information.
+ */
+Observer.prototype.onNext = function (value) { ... };
+
+/**
+ * Notifies the observer that the provider has experienced an error condition.
+ *
+ * @param {Error} error An object that provides additional information about the error.
+ */
+Observer.prototype.onError = function (error) { ... };
+
+/**
+ * Notifies the observer that the provider has finished sending push-based notifications.
+ */
+Observer.prototype.onCompleted = function () { ... };
+```
+
+Wir haben hier die `onNext()` Methode, diese wird immer aufgerufen, wenn ein neuer Wert eintrifft. Beispielsweise
+würde ohne Filter mit einer Subscription auf Mouse-Move-Events, jeder Punkt der Bewegung einen Aufruf von `onNext()`
+zu folge haben. Die beiden anderen Methoden beenden automatisch die Registrierung. `onError()` wird, wie der
+Name schon vermuten lässt im Fehlerfall aufgerufen. `onComplete`, wenn ein Stream beendet wird. Nach dem Aufruf
+beider Funktionen gibt es keinen weiteren Aufruf von `onNext()` mehr.
+Es reicht aber vollkommen aus, die drei Funktionen als Callback-Funktionen der `subscribe()` Methode zu übermitteln.
+Die Reihenfolge ist dabei `onNext, onError, onCompleted`
+Damit hat jeder Observer für sich allein die Möglichkeit Werte aus dem Stream abzugreifen und auf Fehler zu reagieren.
+Dabei beeinflusst er andere Subscriber nicht:
+
+
+* Observervable:
 * * Eigenschaften/Funktionen
 * * .subscribe()
 * * .dispose() - IDisposable, why?
-* Observable
-* * Eigenschaften/Operatoren
+
+Nun waren die Kids echt so cool, dass beide Eltern begannen anderen Eltern von ihnen zu erzählen. Und da man
+das heute wohl so als stolze Eltern macht, wurde ein eigner Youtube-Channel eingerichtet ...
+
+## Youtube
+
+... er sollte nun viele anderen Eltern zeigen wie sie selbst solche Kids bekommen können. Ich habe mir die 
+mal für euch angeschaut. Und wie gehts los? Beim ersten Video geht es zum die `(Er-) Zeugung`. Ich erspare
+euch jetzt einmal die Bilder. Bleiben wir lieber bei den Fakten - also dem Code.
+
 * * Erstellung
 * * * create
 * * * from
@@ -243,7 +345,11 @@ man dann auch eine gute Zusammenfassung der wichtigsten Funktionen
 * * Filter
 * * * filter
 * * Das Kuckukskind - Subject
+
+
 * Warum keine Promises?
+* * Single Values
+* * Cancellation?
 
 
 ## Wir bauen ein Beispiel
