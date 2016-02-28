@@ -3,16 +3,18 @@
 
 ## Intro
 
-* `Opening mit Slide für den Startbildschirm`
-* `Vorstellung`  Das bin ich. Das Bild zieht sich inzwischen durch all meine Accounts im Internet.
+`Opening mit Slide für den Startbildschirm`
+
+`Vorstellung`  Das bin ich. Das Bild zieht sich inzwischen durch all meine Accounts im Internet.
 Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/Electricmaxx).
 In beiden Portalen lohnt es sich mir zu folgen. Auf Github sieht mein eigentlich meine stark PHP lastigen
 Repositories. Das ist aber nur die halbe Wahrheit. In meiner Firma (Mayflower) übernehme ich immer wieder Frontend
 Application oder führe Workshops. Mit Frontend meine ich jetzt aber nicht dieses Design Krams.
 Aber wir sind ja heute nicht wegen mir hier ...
-* `Zum Thema - Was ist überhaupt Reactive?` Es geht um Reactive. Im Speziellen um die Implementierung
-in JavaScript. Doch schauen wir uns erst einmal die ...
-* `History` ... an. 
+
+`Zum Thema - Was ist überhaupt Reactive?` Es geht um Reactive. Im Speziellen um die Implementierung
+in JavaScript. Doch schauen wir uns erst einmal die `History` an.
+ 
 Mitte der 2000er (sagt man so?) haben `Erik Mejer` und `Brian Backman` bei Microsoft ein Cloud Programming Team
 gegründet. In dem Team befand sich auch
 [Mathew Podwysocki](https://twitter.com/mattpodwysocki) `=> images/contributers_rxjs.png`
@@ -26,22 +28,29 @@ plattformunabhängig kompilierbar machen. So kam es dazu, dass man versuchte `Wi
 mit Hilfe von HTML und JavaScript für die "Plattform" Web zu kompilieren. Doch das Web ist asynchron. 
 Promises gab es noch nicht. Also stand man in der wohlbekannten asynchronen Hölle. Dazu kommen Events
 bspw. in Ajax Calls mehr als Metadaten vor.
-* Schauen wir uns doch einmal ein simples `Drag&Drop` an - und davon einfach nur die Mausbewegung:
-* * Wir registrieren Eventlistener
+
+Schauen wir uns doch einmal ein simples `Drag&Drop` an - und davon einfach nur die Mausbewegung:
+
+Wir registrieren Eventlistener
+
 ```
 elem.addEventListener('mousedown', mousedown, false);
 elem.addEventListener('mouseup', mouseup, false);
 elem.addEventListener('mousemove', mousemove, false);
 ```
+
 um das klicken, bewegen und loslassen der Maus zu erfassen. Dazu implementieren wir die Funktionen
 für die Callbacks:
+
 ```javascript
 function mousedown(e) {
     isDown = true;
     state = { startX: e.offsetX, startY: e.offsetY};
 }
 ```javascript
+
 und 
+
 ```javascript
 function mousemove(e) {
     if (!isDown) {return;}
@@ -51,13 +60,16 @@ function mousemove(e) {
     };
 }
 ``` 
+
 ```javascript
 function mouseup (e) {
     isDown = false;
     state = null;
 }
 ```
+
 und was wir nicht vergessen sollten, das Unsubscriben:
+
 ```javascript
 function dispose() {
     elem.removeEventListener('mousedown', mousedown, false);
@@ -65,6 +77,7 @@ function dispose() {
     elem.removeEventListener('mousemove', mousemove, false);
 }
 ```
+
 Hier den Überblick zu behalten ist schon schwer und kommt einem Jonglieren von State und Event schon nahe.
 
 Doch nun ...
@@ -72,7 +85,7 @@ Doch nun ...
 ## An die Bar
 
 Ich möchte euch kurz die Akteure vorstellen:
-* Das `Iterator Pattern` => `TODO: UML Image = > #2` beschreibt einen Einheitlichen Umgang mit Array, Collects oder
+Das `Iterator Pattern` => `TODO: UML Image = > #2` beschreibt einen Einheitlichen Umgang mit Array, Collects oder
 oder ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
 
 ```javascript
