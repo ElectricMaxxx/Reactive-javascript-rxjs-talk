@@ -15,7 +15,7 @@ ohne überflüssigen Overhead zu produzieren.
 `Opening mit Slide für den Startbildschirm`
 
 Bevor wir wirklich los legen eine kurze `Vorstellung`.  Das bin ich. Das Bild zieht sich inzwischen durch all meine
-Accounts im Internet. Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/Electricmaxx).
+Accounts im Internet. Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/ElectricMaxxx).
 In beiden Portalen lohnt es sich mir zu folgen. Auf Github sieht man meine eigentlich meine stark PHP lastigen
 Repositories. Das ist aber nur die halbe Wahrheit. In meiner Firma (Mayflower) übernehme ich immer wieder Frontend
 Application oder führe Workshops durch. Mit Frontend meine ich jetzt aber nicht dieses Design Krams.
