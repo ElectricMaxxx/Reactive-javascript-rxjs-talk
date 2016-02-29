@@ -1,5 +1,15 @@
 # Reactive Javascript mi RxJs
 
+## Abstract
+Stellen Sie sich vor, das Iterator Pattern und das Observer Pattern lernen sich in einer Bar kennen, verlieben sich
+ineinander und zeugen ein Kind, das sie “RxJS” nennen. RxJS stellt Erweiterungen zur reaktiven Programmierung in
+JavaScript bereit. Es handelt sich hierbei um ein Paradigma, bei dem der Datenfluss im Fokus liegt. Angestrebt wird,
+ein stabiles, skalierbares und resilientes Anwendererlebnis zu schaffen. Im Kern steht der effiziente Umgang mit
+asynchronen Ereignissen. Und die sind zahlreich: vom Bootstraping der Applikation, Steuern von Animationen, Umgang
+mit Benutzereingaben bishin zu XHRs. Die Session erklärt anhand beispielhafter Implementierungen was hinter diesem
+Paradigma steht. Sie zeigt überdies auf, wie damit zeitgemäße asychrone Anwendungen eventgetrieben entwickelt werden
+ohne überflüssigen Overhead zu produzieren.
+
 ## Intro
 
 `Opening mit Slide für den Startbildschirm`
