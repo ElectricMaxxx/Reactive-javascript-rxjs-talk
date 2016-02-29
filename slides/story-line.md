@@ -14,7 +14,7 @@ ohne überflüssigen Overhead zu produzieren.
 
 `Opening mit Slide für den Startbildschirm`
 
-Bevor wir wirklich los legen eine kurze `Vorstellung`.  Das bin ich. Das Bild zieht sich inzwischen durch all meine
+Bevor wir wirklich los legen eine kurze `Vorstellung - Who am I?`.  Das bin ich. Das Bild zieht sich inzwischen durch all meine
 Accounts im Internet. Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/Electricmaxx).
 In beiden Portalen lohnt es sich mir zu folgen. Auf Github sieht man meine eigentlich meine stark PHP lastigen
 Repositories. Das ist aber nur die halbe Wahrheit. In meiner Firma (Mayflower) übernehme ich immer wieder Frontend
@@ -24,8 +24,8 @@ Aber wir sind ja heute nicht wegen mir hier ...
 Nun zum Thema : Im groben geht es heute ja eigentlich um `Reactive Extensions - Rx` Im Speziellen um die Implementierung
 in JavaScript. Doch schauen wir uns erst einmal die `History` an.
  
-Mitte der 2000er (sagt man so?) haben `Erik Mejer` und `Brian Backman` bei Microsoft ein Cloud Programming Team
-gegründet. In dem Team befand sich auch
+Mitte der 2000er (sagt man so?) haben `Erik Mejer` und `Brian Backman` bei Microsoft ein Cloud Programming
+Team gegründet. In dem Team befand sich auch
 [Mathew Podwysocki](https://twitter.com/mattpodwysocki) `=> images/contributers_rxjs.png`
 Die Jungs hatten in dem Projekt den schönen Effekt, dass sie unbegrenztes Budget hatte.
 Sie sollten eigentlich die Cloud ergründen und bauten dabei fast aus Zufall die Reactive Extension.
@@ -33,7 +33,7 @@ Dort und im Nachgang wird auch als `LINQ to Events` bezeichnet.
 Ich bin ja hier auf einer .net lastigen Konferenz, da muss ich wohl nicht groß erklären was 
 LINQ ist, oder? (Innerhalb von .net einheitliche Methode um auf Daten zuzugreifen - Language Integrated Query)
 Doch wie ist das geschehen? Es begann mit einem Projekt names `Volta` Es sollte wohl Applications
-plattformunabhängig kompilierbar machen. So kam es dazu, dass man versuchte `Windows Forms` in Web Forms
+plattformunabhängig kompilierbar machen. So kam es dazu, dass man versuchte `Windows Forms` in `Web Forms`
 mit Hilfe von HTML und JavaScript für die "Plattform" Web zu kompilieren. Doch das Web ist asynchron. 
 Promises gab es noch nicht. Also stand man in der wohlbekannten asynchronen Hölle. Dazu kommen Events
 bspw. in Ajax Calls mehr als Metadaten vor. 
@@ -56,7 +56,7 @@ function mousedown(e) {
     isDown = true;
     state = { startX: e.offsetX, startY: e.offsetY};
 }
-```javascript
+```
 
 und 
 
@@ -209,11 +209,11 @@ Array-Funktionenn.
 Was dieses Vorghen aumacht: Es ist Pull basiert. Das heißt Werte, die man haben will holt man sich aus der
 Liste filtert Diese und sucht sich dann noch die richtigen Properties raus.
 
-Neben dem Iterator Pattern ging es ja auch noch um das `Observer Pattern` => `Todo: Image => #3`, als zweiten Akteur.
+Neben dem Iterator Pattern ging es ja auch noch um das `Observer Pattern`, als zweiten Akteur.
 Dieses beschreibt die Verbindung zwischen einem Beobachteten Objekt und seinen Beobachtern.
 Dabei wird eher ein bestimmter Status-Wechsel beobachtet
 als das Objekt an sich. Bei dem beobachteten Object spricht man von dem Subject oder Observable 
-(engl. beobachtbar). Dieses stellt eine Methode zum Registrieren berereit. `Observable.subscribe()` könnte solch
+(engl. beobachtbar). Dieses stellt eine Methode zum Registrieren berereit. `Observable.prototype.subscribe()` könnte solch
 ein Interface aussehen. Nun meldet ein Beobachter - auch Observer genannt - also Interesse an dem Observable an.
 Damit der Observable den Observer über Änderungen informieren kann, muss der Observer wiederum eine Methode zum
 Mitteilen implementieren. Die könnte beispielsweise `Observer.prototype.notify()` lauten.
@@ -283,26 +283,18 @@ wird jetzt
 ```javascript
 var list = [1, 2, 3, 4, 5];
 
-// create an observable
 var source = Rx.Observable.fromArray(list);
 
-//subscribe an observer
 var disposal = source.subscribe(
-    function (x) {
-        console.log('Next: ' + x);
-    },
-    function (err) {
-        console.log('Error: ' + err);
-    },
-    function () {
-        console.log('Completed');
-    });
+    function (x) {console.log('Next: ' + x);},
+    function (err) {console.log('Error: ' + err);},
+    function () {console.log('Completed');});
 
-// unsubscribe
 disposal.dispose();
 ```
+
 Das sieht jetzt ein wenig mehr Schreibarbeit für die Ausgabe eines Arrays aus. 
-Aber stellen wir uns einmal vor, das wären jetzt Push Notifications aus einer WebSocket
+Aber stellen wir uns einmal vor, das wären jetzt Push Notifications von einem WebSocket
 Verbindung oder Informationen aus dem Mouse-Move-Events, wie sie vorhin gebaut haben. Zu den genaueren 
 Vorgängen komme ich im Anschluss.
 Ja was folgt im Anschluss an eine Hochzeit. Ja ? ...

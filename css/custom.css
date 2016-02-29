@@ -1,0 +1,10 @@
+span.attribution {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:500;
+    background-color: rgba(0,0,0,0.5);
+    font-size: 25px;
+    margin-top: 370px;
+    margin-left: 140px;
+}
