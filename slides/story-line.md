@@ -1,18 +1,17 @@
 # Reactive Javascript mi RxJs
 
-
 ## Intro
 
 `Opening mit Slide für den Startbildschirm`
 
-`Vorstellung`  Das bin ich. Das Bild zieht sich inzwischen durch all meine Accounts im Internet.
-Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/Electricmaxx).
-In beiden Portalen lohnt es sich mir zu folgen. Auf Github sieht mein eigentlich meine stark PHP lastigen
+Bevor wir wirklich los legen eine kurze `Vorstellung`.  Das bin ich. Das Bild zieht sich inzwischen durch all meine
+Accounts im Internet. Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/Electricmaxx).
+In beiden Portalen lohnt es sich mir zu folgen. Auf Github sieht man meine eigentlich meine stark PHP lastigen
 Repositories. Das ist aber nur die halbe Wahrheit. In meiner Firma (Mayflower) übernehme ich immer wieder Frontend
-Application oder führe Workshops. Mit Frontend meine ich jetzt aber nicht dieses Design Krams.
+Application oder führe Workshops durch. Mit Frontend meine ich jetzt aber nicht dieses Design Krams.
 Aber wir sind ja heute nicht wegen mir hier ...
 
-`Zum Thema - Was ist überhaupt Reactive?` Es geht um Reactive. Im Speziellen um die Implementierung
+Nun zum Thema : Im groben geht es heute ja eigentlich um `Reactive Extensions - Rx` Im Speziellen um die Implementierung
 in JavaScript. Doch schauen wir uns erst einmal die `History` an.
  
 Mitte der 2000er (sagt man so?) haben `Erik Mejer` und `Brian Backman` bei Microsoft ein Cloud Programming Team
@@ -20,14 +19,14 @@ gegründet. In dem Team befand sich auch
 [Mathew Podwysocki](https://twitter.com/mattpodwysocki) `=> images/contributers_rxjs.png`
 Die Jungs hatten in dem Projekt den schönen Effekt, dass sie unbegrenztes Budget hatte.
 Sie sollten eigentlich die Cloud ergründen und bauten dabei fast aus Zufall die Reactive Extension.
-Es wird auch als `LINQ to Events` bezeichnet.
+Dort und im Nachgang wird auch als `LINQ to Events` bezeichnet.
 Ich bin ja hier auf einer .net lastigen Konferenz, da muss ich wohl nicht groß erklären was 
 LINQ ist, oder? (Innerhalb von .net einheitliche Methode um auf Daten zuzugreifen - Language Integrated Query)
 Doch wie ist das geschehen? Es begann mit einem Projekt names `Volta` Es sollte wohl Applications
 plattformunabhängig kompilierbar machen. So kam es dazu, dass man versuchte `Windows Forms` in Web Forms
 mit Hilfe von HTML und JavaScript für die "Plattform" Web zu kompilieren. Doch das Web ist asynchron. 
 Promises gab es noch nicht. Also stand man in der wohlbekannten asynchronen Hölle. Dazu kommen Events
-bspw. in Ajax Calls mehr als Metadaten vor.
+bspw. in Ajax Calls mehr als Metadaten vor. 
 
 Schauen wir uns doch einmal ein simples `Drag&Drop` an - und davon einfach nur die Mausbewegung:
 
@@ -80,46 +79,53 @@ function dispose() {
 
 Hier den Überblick zu behalten ist schon schwer und kommt einem Jonglieren von State und Event schon nahe.
 
-Doch nun ...
+Doch nun erst einmal...
 
 ## An die Bar
 
 Ich möchte euch kurz die Akteure vorstellen:
-Das `Iterator Pattern` => `TODO: UML Image = > #2` beschreibt einen Einheitlichen Umgang mit Array, Collects oder
-oder ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
+
+Das `Iterator Pattern` => `TODO: UML Image = > #2` beschreibt einen Einheitlichen Umgang mit Array, Collections oder
+oder Ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
+Schauen wir uns einmal an, wie das aussehen könnte:
 
 ```javascript
-var List = (function () {
-    var index = 0,
-        data = [1, A, 3, B, 5],
-        length = data.length;
-    return {
-        next: function () {},
-        hasNex: function () {},
-        rewind: function () {},
-        current: function () {}
-    }
-})();
+var Iterator = function () {};
 
-while (List.hasNext()) {
-    console.log(List.next());
+/**
+ * Returns the next object in the collection.
+ */
+Iterator.prototype.next();
+
+/**
+ * Will reset the internal index. Calling .next() will return the first item now.
+ */
+Iterator.prototype.rewind();
+
+/**
+ * Returns the current item in the collection.
+ */
+Iterator.prototype.current();
+
+/**
+ * Decider whether there is a next element or not. 
+ * Returns false when the collection is at his end.
+ */
+Iterator.prototype.hasNext();
+```
+
+Mit einer Kombination aus `.next()` und `.hasNext()` lässt sich nun relativ einfach traversieren.
+
+```javascript
+while (Iterator.hasNext()) {
+    console.log(Iterator.next());
 }
 ```
 
-Die Methoden sind natürlich noch sinnvoll zu implementieren. Aber man sollte eine Ausgabe in der Form erhalten:
-
-```
-> 1
-> A
-> 3
-> B
-> 5
-```
-
 Das Handling von Collections wird aber nicht nur durch das Iterator Pattern bestimmt. So lassen sich auf
-solchen Listen auch wunderbar Queries durch `Functional Programming` absetzen. Stellen wir uns mal folgende
+solche Listen auch wunderbar Queries durch absetzen. Stellen wir uns mal folgende
 Aufgabe vor: `Liste von Filmen => trage id + title von Filmen mit Rating 5.0 zusammen` Das könnte so auf 
-einem onDemand System a la Netflix passieren. Das heißt wir haben eine Liste wie:
+einem onDemand System a la Netflix zum täglichen Brot gehören. Das heißt wir haben eine Liste wie:
 
 ```javascript
  var videos = [
@@ -144,7 +150,8 @@ einem onDemand System a la Netflix passieren. Das heißt wir haben eine Liste wi
  ];
 ```
 
-Wir könnten jetzt wie folgt vorgehen:
+Die Liste ist jetzt noch nicht so lang. Mein Video-Porta befindet sich noch im Aufbau.
+Um durch die Liste zu kommen, könnten jetzt wie folgt vorgehen:
 
 ```javascript
 var newList = [];
@@ -157,7 +164,7 @@ for(var i = 0; i <= videos.length; i++) {
 console.log(newList);
 ```
 
-ein wenig besser wäre vielleicht:
+Ein wenig besser wäre vielleicht:
 
 ```javascript
 var newList = [];
@@ -169,6 +176,7 @@ videos.forEach(function (video) {
 console.log(newList);
 ```
 
+Denn wenn es native Array-Funktionen gibt sollte man sie auch nutzen.
 Doch wie wäre es mit?
 
 ```javascript
@@ -184,22 +192,46 @@ var newList =
 console.log(newList);
 ```
 
-Wir arbeiten hier jetzt mit einer Filter-Funktion (reduce) und einer Projektion (map)
-mit der dann die Richtigen Werte generiert werden.
-
-TODO klären ab wann und wo die funktionen vorhanden sind => #1
+Wir arbeiten hier jetzt mit einer Filter-Funktion (reduce) und einer Projektion (map),
+mit der dann die Richtigen Werte generiert werden. Beide Funktionen gehören ebenfalls zu den nativen
+Array-Funktionenn.
 
 Was dieses Vorghen aumacht: Es ist Pull basiert. Das heißt Werte, die man haben will holt man sich aus der
-Liste und eben nur genau die.
+Liste filtert Diese und sucht sich dann noch die richtigen Properties raus.
 
-Neben dem Iterator Pattern ging es ja auch um das `Observer Pattern` => `Todo: Image => #3`. Dieses beschreibt die Verbindung zwischen 
-einem Beobachteten Objekt und seinen Beobachtern. Dabei wird wohl eher ein bestimmter Status-Wechsel beobachtet
-als das Objekt an sich. Bei dem beobachteten Object spricht man von dem Subject oder besser Observable 
-(engl. beobachtet). Dieses stellt eine methode zum subscriben berereit. Das heißt ein Beobachter - auch 
-Observer genannt - registriert sich und meldet interesse an Status Wechseln an. Damit der Observable den Observer
-über Änderungen informieren kann, muss dieser eine Methode zum Mitteilen implementieren (bspw. notify()).
+Neben dem Iterator Pattern ging es ja auch noch um das `Observer Pattern` => `Todo: Image => #3`, als zweiten Akteur.
+Dieses beschreibt die Verbindung zwischen einem Beobachteten Objekt und seinen Beobachtern.
+Dabei wird eher ein bestimmter Status-Wechsel beobachtet
+als das Objekt an sich. Bei dem beobachteten Object spricht man von dem Subject oder Observable 
+(engl. beobachtbar). Dieses stellt eine Methode zum Registrieren berereit. `Observable.subscribe()` könnte solch
+ein Interface aussehen. Nun meldet ein Beobachter - auch Observer genannt - also Interesse an dem Observable an.
+Damit der Observable den Observer über Änderungen informieren kann, muss der Observer wiederum eine Methode zum
+Mitteilen implementieren. Die könnte beispielsweise `Observer.prototype.notify()` lauten.
 Der Observable sollte dann natürlich auch eine Methode zum unsubscriben bereithalten damit der Observer
 seine Registrierung auch wieder Rückgängig machen kann.
+
+```javascript
+var Observable = function () {};
+
+/**
+ * Method to register an Observer Object.
+ */
+Observable.prototype.unsubscribe = function () {};
+
+
+/**
+ * Method to unregister an Observer Object. 
+ */
+Observable.prototype.unsubscribe = function () {};
+
+
+var Observer = function () {};
+
+/**
+ * Method to inform the Observer, when there are changes.
+ */
+Observer.prototype.notify = function() {};
+```
 
 `Was bringt einem das ganze?`. `Entkopplung` Man verhindert dann doch all zu prozedualen Code. 
 Dem Observable muss es nicht interessieren wer da in der Leitung hängt - Hauptsache er kann jedem seine Änderung
