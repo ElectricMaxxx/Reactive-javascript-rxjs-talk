@@ -1,5 +1,5 @@
-# Reactive JavaScript mit RxJS - BASTA! 2016
-## Maximilian Berghoff - 23.03.2016
+## Reactive JavaScript mit RxJS - BASTA! 2016
+#### Maximilian Berghoff - 23.03.2016
 
 Note:  Wollen wir loslegen?
 Bevor wir wirklich los legen eine kurze ....
@@ -106,7 +106,7 @@ elem.addEventListener('mousemove', mousemove, false);
 Note: ... Die Event Listener Registrieren, um das klicken, bewegen und loslassen der Maus zu erfassen. Dazu implementieren wir die Funktionen
       für die Callbacks: ... KLICK
       
-----
+---
 
 ## mouse down
 
@@ -177,7 +177,7 @@ Note: ... Ich möchte euch kurz die Akteure vorstellen: ... KLICK
 
 ---
 
-# Das Iterator Pattern
+# Iterator Pattern
 
 Note: Das `Iterator Pattern`beschreibt einen Einheitlichen Umgang mit Array, Collections oder
       oder Ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
@@ -225,7 +225,7 @@ Note: Das Handling von Collections wird aber nicht nur durch das Iterator Patter
 
 - Liste von Contails <!-- .element: class="fragment" -->
 - Eigenschaften: id, name, zutaten, prozent, ... <!-- .element: class="fragment" -->
-- Aufgabe: "Trage id & name von allem Contails mit prozent = 5.0% zusammen" <!-- .element: class="fragment" -->
+- Aufgabe: "Trage id & name von allem Contails mit prozent > 5.0% zusammen" <!-- .element: class="fragment" -->
 
 Note: `Liste von Cocktails => trage id + name von Cocktails mit mehr als 5.0% Alc zusammen`
        Das heißt wir haben eine Liste wie:
@@ -979,7 +979,7 @@ Note: Es gibt noch viele weitere Operatoren um auf den Observalbes zu arbeiten. 
 - Single Value <!-- .element class="fragment" -->
 - Cancellation? <!-- .element class="fragment" -->
 
-Not: `Promises` um mit asynchronen Aufgaben umgehen zu können. Doch warum kommt jetzt Famile RxJS mit etwas neum daher?
+Note: `Promises` um mit asynchronen Aufgaben umgehen zu können. Doch warum kommt jetzt Famile RxJS mit etwas neum daher?
      Wir haben uns doch gerade erst daran gewöhnt. 
      Es gibt zwei Gründe dafür. Zum einem geht es bei Streams um ... KLICK`Mehrere Werte` während bei Promisses immer nur der eine 
      Datensatz kommt, den man beispielsweise gerade per AJAX angefragt hat. Außerdem fehlt den Promisses die Möglichkeit die
