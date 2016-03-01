@@ -310,7 +310,7 @@ Realität lasse ich jetzt einmal offen. Die Eigenschaften möchte ich euch jetzt
 Schnipseln demonstrieren. Ich werde die Slides natürlich zugänglich machen. D.h. damit hat
 man dann auch eine gute Zusammenfassung der wichtigsten Funktionen.
 
-Wenn der Observer, wie obn im Beispiel nicht nur aus Callbacks, besteht, also so ...
+Wenn der `Observer`, wie obn im Beispiel nicht nur aus Callbacks, besteht, also so ...
 
 ```javascript
 var disposal = source.subscribe(
@@ -330,28 +330,12 @@ var disposal = source.subscribe(
 über einen Fehler oder über das Ende zu informieren:
 
 ```javascript
-/**
- * Provides a mechanism for receiving push-based notifications.
- */
 function Observer() { }
 
-/**
- * Provides the observer with new data.
- *
- * @param {Any} value The current notification information.
- */
 Observer.prototype.onNext = function (value) { ... };
 
-/**
- * Notifies the observer that the provider has experienced an error condition.
- *
- * @param {Error} error An object that provides additional information about the error.
- */
 Observer.prototype.onError = function (error) { ... };
 
-/**
- * Notifies the observer that the provider has finished sending push-based notifications.
- */
 Observer.prototype.onCompleted = function () { ... };
 ```
 
@@ -369,36 +353,27 @@ Dabei beeinflusst er andere Subscriber nicht:
 var source = Rx.Observable.range(1,10);
 
 var reducedSource = source.filter(function (value) {
-	return value % 2 === 0;
+    return value % 2 === 0;
 });
-
-var disposal1 = reducedSource.subscribe(
-  function (x) {
-        console.log('Next 1: ' + x);
-    },
-    function (err) {
-        console.log('Error 1: ' + err);
-    },
-    function () {
-        console.log('Completed 1.');
-    });
-
-disposal1.dispose();
-
-var disposal2 = source.subscribe(
-function (x) {
-        console.log('Next 2: ' + x);
-    },
-    function (err) {
-        console.log('Error 2: ' + err);
-    },
-    function () {
-        console.log('Completed 2');
-    });
-disposal2.dispose();
 ```
 
-(Hint: auf Slides verteilen)
+```javascript
+var disposal1 = reducedSource.subscribe(
+    function (x) {console.log('Next 1: ' + x);},
+    function (err) {console.log('Error 1: ' + err);},
+    function () {console.log('Completed 1.');}
+);
+disposal1.dispose();
+```
+
+```javascript
+var disposal2 = source.subscribe(
+    function (x) {console.log('Next 2: ' + x);},
+    function (err) {console.log('Error 2: ' + err);},
+    function () {console.log('Completed 2');}
+);
+disposal2.dispose();
+```
 
 In der Console sieht man dann:
 
@@ -421,32 +396,17 @@ In der Console sieht man dann:
 > Next 2: 10
 > Completed 2
 ```
-
-Damit das Observable Object erst einmal grundlegend funktioniert benötigt es
+Zum `Observable` ..
+Damit das Observable Objekt erst einmal grundlegend funktioniert benötigt es
 ein `subscribe()` Methode ...
 
 ```javascript
-/**
- * Defines a method to release allocated resources.
- */
 function Disposable() { }
 
-/**
- * Performs application-defined tasks associated with freeing, releasing, or resetting resources.
- */
 Disposable.prototype.dispose = function () { ... }
 
-/**
- * Defines a provider for push-based notification.
- */
 function Observable() { }
 
-/**
- * Notifies the provider that an observer is to receive notifications.
- *
- * @param {Observer} observer The object that is to receive notifications.
- * @returns {Disposable} A reference to disposable that allows observers to stop receiving notifications before the provider has finished sending them.
- */
 Observable.prototype.subscribe = function (observer) { ... }
 ```
 
@@ -499,9 +459,9 @@ onNext() Call mehr nach dem onCompleted() kommen kann. Übrigens die Ausgabe sä
 ```
 
 Also so wie man es sich vorstellt. 
-Eine nächste einfach möglichkeit besteht mit `Rx.Observable.range()`. Damit generiert man sich ähnlich wie mit einem
-Array eine Sequenz, auf die sich der Observer registrieren kann. Ich glaube wir hatten dazu heute schon
-einmal ein Beispiel aber hier dann nochmal:
+Eine nächste einfach möglichkeit besteht mit `Rx.Observable.range()`. Damit generiert man sich eine Sequenz,
+auf die sich der Observer registrieren kann. Ich glaube wir hatten dazu heute schon einmal ein
+Beispiel aber hier dann nochmal:
 
 ```javascript
 var source = Rx.Observable.range(1, 5);
@@ -511,6 +471,7 @@ var subscription = source.subscribe(
   function (e) { console.log('onError: %s', e); },
   function () { console.log('onCompleted'); });
 ```
+
 Die Signatur ist hier Startwert und die Anzahl der Schritte. Das gibt dann:
 
 ```
@@ -532,15 +493,9 @@ var input = $('#input');
 var source = Rx.Observable.fromEvent(input, 'keyup');
 
 var subscription = source.subscribe(
-  function (x) {
-    console.log('Next: key pressed!');
-  },
-  function (err) {
-    console.log('Error: %s', err);
-  },
-  function () {
-    console.log('Completed');
-  });
+  function (x) {console.log('Next: key pressed!');},
+  function (err) {console.log('Error: %s', err);},
+  function () {console.log('Completed');});
 ```
  
 So lassen sich realativ einfach Autocomplete Funktionen umsetzen. Mit der Callback Methode ließen sich 
@@ -562,7 +517,7 @@ var subscription = source.subscribe(
 
 Das ist zwar jetzt nur die Existenz aber der reine Zugriff ließe sich damit auch machen.
 
-Wenn wir die Kids dann nach dem Vorbild von RxJS erzeugt haben wollen wir auch mit ihnen Arbeiten. Am liebsten
+Wenn wir die Kids dann nach dem Vorbild von RxJS erzeugt haben wollen wir auch mit ihnen `Arbeiten`. Am liebsten
 Wollen wir sie mit Queries - also Abfragen - versehen, wie wir es auf Collections gewohnt sind. Das heißt
 wir wollen Projektionen wir `.map()` oder `.flatMap()` ausführen, dazu wollen wir die Resultate Filtern
 `.filter()` oder gar zusammenführen `.merge()`/`.concat()`. Da die Jungs, die die Reactive Extensions gebaut
@@ -587,16 +542,16 @@ var disposal = merged.subscribe(function (x) {
 Was gibt das wohl? Richtig ...
 
 ```
-> Merged onNext: 1
-> Merged onNext: 2
-> Merged onNext: 3
-> Merged onNext: 4
-> Merged onNext: 5
-> Merged onNext: 6
-> Merged onNext: 7
-> Merged onNext: 8
-> Merged onNext: 9
-> Merged onNext: 10
+> Concat onNext: 1
+> Concat onNext: 2
+> Concat onNext: 3
+> Concat onNext: 4
+> Concat onNext: 5
+> Concat onNext: 6
+> Concat onNext: 7
+> Concat onNext: 8
+> Concat onNext: 9
+> Concat onNext: 10
 ``` 
 
 Die Einträge werden direkt an einander gehangen. Mit merge ....
@@ -709,9 +664,10 @@ heißt es fließen beide Werte aus ihm heraus. Diese Landen dann im inneren Obse
 welches in beiden durchläufen dann zu:
 
 ```javascript
-Rx.Observable.range(1, 2);
+return Rx.Observable.range(1, 2);
 return Rx.Observable.range(2, 2);
 ``` 
+
 wird. Diese ergeben dann nacheinander folgenden Output:
 
 ```
@@ -751,16 +707,15 @@ einer Liste dargestellt.
 
 Bauen wir uns dazu erst einmal ein klein wenig HTML zusammen:
 
+
 ```html
 <input type="text" id="input"/>
 
-<h2>
-Results
-</h2>
-<div id="results">
-
-</div>
+<h2>Results</h2>
+<ul id="results">
+</ul>
 ```
+
 
 Ich fange jetzt nicht an das in irgendeiner Art und Weise zu stylen - kann ich eh nicht. Wir starten erst einmal damit
 die keyups im Input zu sammeln:

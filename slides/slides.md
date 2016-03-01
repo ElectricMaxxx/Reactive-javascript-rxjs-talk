@@ -300,6 +300,480 @@ disposal.dispose();
 
 ---
 
+# Observer
+
+---
+
+```javascript
+var disposal = source.subscribe(
+    function (x) {console.log('Next: ' + x);},
+    function (err) {console.log('Error: ' + err);},
+    function () {console.log('Completed');}
+);
+```
+
+---
+
+
+```javascript
+function Observer() { }
+
+Observer.prototype.onNext = function (value) { ... };
+
+Observer.prototype.onError = function (error) { ... };
+
+Observer.prototype.onCompleted = function () { ... };
+```
+
+---
+
+```javascript
+var source = Rx.Observable.range(1,10);
+
+var reducedSource = source.filter(function (value) {
+    return value % 2 === 0;
+});
+```
+
+```javascript
+var disposal1 = reducedSource.subscribe(
+    function (x) {console.log('Next 1: ' + x);},
+    function (err) {console.log('Error 1: ' + err);},
+    function () {console.log('Completed 1.');}
+);
+disposal1.dispose();
+```
+
+```javascript
+var disposal2 = source.subscribe(
+    function (x) {console.log('Next 2: ' + x);},
+    function (err) {console.log('Error 2: ' + err);},
+    function () {console.log('Completed 2');}
+);
+disposal2.dispose();
+```
+
+---
+
+```
+> Next 1: 2
+> Next 1: 4
+> Next 1: 6
+> Next 1: 8
+> Next 1: 10
+> Completed 1.
+> Next 2: 1
+> Next 2: 2
+> Next 2: 3
+> Next 2: 4
+> Next 2: 5
+> Next 2: 6
+> Next 2: 7
+> Next 2: 8
+> Next 2: 9
+> Next 2: 10
+> Completed 2
+```
+
+---
+
+# Observalbe
+
+---
+
+```javascript
+function Disposable() { }
+
+Disposable.prototype.dispose = function () { ... }
+
+function Observable() { }
+
+Observable.prototype.subscribe = function (observer) { ... }
+```
+
+---
+
+# Youtube
+
+---
+
+# (Er-) Zeugung
+
+---
+
+```javascript
+Rx.Observable.create()
+```
+---
+
+```javascript
+var source = Rx.Observable.create(function (observer) {
+  observer.onNext(42);
+  observer.onCompleted();
+  return function () {
+    console.log('disposed');
+  }
+});
+
+var subscription = source.subscribe(
+  function (x) { console.log('onNext: %s', x); },
+  function (e) { console.log('onError: %s', e); },
+  function () { console.log('onCompleted'); }
+  );
+
+subscription.dispose();
+```
+
+---
+
+```
+> onNext: 42
+> onCompleted
+> disposed
+```
+
+---
+
+```javascript
+Rx.Observable.range()
+```
+---
+
+```javascript
+var source = Rx.Observable.range(1, 5);
+
+var subscription = source.subscribe(
+  function (x) { console.log('onNext: %s', x); },
+  function (e) { console.log('onError: %s', e); },
+  function () { console.log('onCompleted'); }
+);
+```
+
+---
+
+```
+> onNext: 1
+> onNext: 2
+> onNext: 3
+> onNext: 4
+> onNext: 5
+```
+
+---
+
+```javascript
+Rx.Observable.fromEvent(element, eventName, [selector])
+// oder
+Rx.Observable.fromCallback(func, [context], [selector])
+```
+---
+
+```javascript
+var input = $('#input');
+
+var source = Rx.Observable.fromEvent(input, 'keyup');
+
+var subscription = source.subscribe(
+  function (x) {console.log('Next: key pressed!');},
+  function (err) {console.log('Error: %s', err);},
+  function () {console.log('Completed');});
+```
+
+---
+
+```javascript
+var fs = require('fs'),
+    Rx = require('rx');
+
+var exists = Rx.Observable.fromCallback(fs.exists);
+var source = exists('file.txt');
+
+var subscription = source.subscribe(
+    function (x) {console.log('Next: ' + x);},
+    function (err) {console.log('Error: ' + err);},
+    function () {console.log('Completed');}
+  );
+```
+
+---
+
+<!-- .slide: data-background="https://upload.wikimedia.org/wikipedia/commons/2/2f/Kinderarbeit.jpg" -->
+
+<span class="attribution">von Unbekannt [Public domain], <a href="https://commons.wikimedia.org/wiki/File%3AKinderarbeit.jpg">via Wikimedia Commons</a></span>
+
+---
+
+# LINQ
+## Language Integrated Query
+
+---
+
+# Kombination
+
+```javascript
+.concat();
+// oder
+.merge();
+```
+
+---
+
+```javascript
+var sourceOne = Rx.Observable.range(1,5);
+var sourceTwo = Rx.Observable.range(6,5);
+
+var merged = sourceOne.concat(sourceTwo);
+var disposal = merged.subscribe(function (x) {
+	console.log('Concat onNext: ' + x); 
+});
+```
+
+---
+
+# Output
+
+```
+> Concat onNext: 1
+> Concat onNext: 2
+> Concat onNext: 3
+> Concat onNext: 4
+> Concat onNext: 5
+> Concat onNext: 6
+> Concat onNext: 7
+> Concat onNext: 8
+> Concat onNext: 9
+> Concat onNext: 10
+``` 
+
+---
+
+```javascript
+var sourceOne = Rx.Observable.range(1,5);
+var sourceTwo = Rx.Observable.range(6,5);
+
+var merged = sourceOne.merge(sourceTwo);
+var disposal = merged.subscribe(function (x) {
+	console.log('Merged onNext: ' + x); 
+});
+```
+
+---
+
+# Output
+
+```
+> Merged onNext: 1
+> Merged onNext: 6
+> Merged onNext: 2
+> Merged onNext: 7
+> Merged onNext: 3
+> Merged onNext: 8
+> Merged onNext: 4
+> Merged onNext: 9
+> Merged onNext: 5
+> Merged onNext: 10
+```
+
+---
+
+# Filter
+
+---
+
+```javascript
+var source = Rx.Observable.range(1,10);
+
+var filtered = source.filter(function (x) {
+    return x % 2 === 0;
+});
+
+var disposal = filtered.subscribe(function (x) {
+    console.log('onNext: ' + x);
+});
+```
+
+---
+
+# Output
+
+```
+> onNext: 2
+> onNext: 4
+> onNext: 6
+> onNext: 8
+> onNext: 10
+```
+
+---
+
+# Projektionen
+
+---
+
+```
+var list = [
+    {id: 1, title: 'Kill Bill 1'},
+    {id: 2, title: 'Kill Bill 2'},
+    {id: 3, title: 'Titanic'}
+];
+
+var source = Rx.Observable.from(list);
+
+var ids = source.map(function (item) {
+    return item.id;
+});
+
+var disposal = ids.subscribe(function (x) {
+    console.log('onNext Id: ' + x);
+});
+
+disposal.dispose();
+```
+
+---
+
+# Output
+
+``` 
+onNext Id: 1
+onNext Id: 2
+onNext Id: 3
+```
+
+---
+
+# ?
+
+```javascript
+.flatMap();
+```
+
+---
+
+```javascript
+var source = Rx.Observable
+    .range(1, 2)
+    .flatMap(function (x) {
+        return Rx.Observable.range(x, 2);
+    });
+
+var subscription = source.subscribe(
+    function (x) {
+        console.log('onNext: ' + x);
+    }
+);
+```
+
+---
+
+```javascript
+return Rx.Observable.range(1, 2);
+return Rx.Observable.range(2, 2);
+``` 
+
+---
+
+```
+> onNext: 1
+> onNext: 2
+> onNext: 2
+> onNext: 3
+```
+
+---
+
+# Noch mehr?
+
+#### [Github/Dokumentation](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/categories.md) 
+
+---
+
+# Promises?
+
+- Single Value <!-- .element class="fragment" -->
+- Cancellation? <!-- .element class="fragment" -->
+
+---
+
+<!-- .slide: data-background="https://upload.wikimedia.org/wikipedia/commons/6/62/Thw_Betonkettensaege_in_aktion.jpg" -->
+# Action
+<span class="attribution">von Thiemo Schuff (Eigenes Werk) [<a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AThw_Betonkettensaege_in_aktion.jpg">via Wikimedia Commons</a></span>
+
+---
+
+```html
+<input type="text" id="input"/>
+
+<h2>Results</h2>
+<ul id="results">
+</ul>
+```
+
+---
+
+```javascript
+    var $input = $('#input');
+    var $results = $('#results');
+
+    var suggestions = Rx.Observable.fromEvent($input, 'keyup');
+``` 
+
+---
+
+``` javascript
+var suggestions = Rx.Observable.fromEvent($input, 'keyup')
+        .pluck('target', 'value')
+        .filter(function(text) { return text.length > 2 })
+        .debounce(500 /* ms */)
+        .distinctUntilChanged();
+```
+
+---
+
+```javascript
+    ...
+    flatMapLatest(function (term) {
+            return $.ajax({
+                url: 'https://en.wikipedia.org/w/api.php',
+                dataType: 'jsonp',
+                data: {
+                    action: 'opensearch',
+                    format: 'json',
+                    search: term
+                }
+            }).promise();
+        });
+```
+
+---
+
+```javascript
+    ...
+    .subscribe(
+        function(data) {
+            $results
+                .empty()
+                .append($.map(data[1], function (value) {
+                    return $('<li>').text(value);
+                }))
+        },
+        function(error) {
+            $results
+                .empty()
+                .append($('<li>'))
+                .text('Error:' + error);
+        }
+    );
+```
+
+---
+
+<!-- .slide: data-background="https://upload.wikimedia.org/wikipedia/commons/2/2a/X6029_-_Tr%C3%A4skofiol_-_ok%C3%A4nd_tillverkare_-_foto_Mikael_Bodner.jpg" -->
+# js fiddle
+<span class="attribution">By Musik- och teatermuseet (Own work) [<a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AX6029_-_Tr%C3%A4skofiol_-_ok%C3%A4nd_tillverkare_-_foto_Mikael_Bodner.jpg">via Wikimedia Commons</a></span>
+
+---
+
 # Questions?
 
 - Ask Now!
