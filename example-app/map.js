@@ -1,7 +1,7 @@
 var list = [
-    {id: 1, title: 'Kill Bill 1'},
-    {id: 2, title: 'Kill Bill 2'},
-    {id: 3, title: 'Titanic'}
+    {id: 100001, name: 'Piña Colada', zutaten: [], prozent: 5.0 },
+    { id: 100002, name: ' Tequila Sunrise', zutaten: [], prozent: 6.0 },
+    { id: 100003, name: ' Long Island', zutaten: [], prozent: 7.0 },
 ];
 
 var source = Rx.Observable.from(list);

@@ -14,8 +14,6 @@ ohne überflüssigen Overhead zu produzieren.
 
 `Opening mit Slide für den Startbildschirm`
 
-Bevor wir wirklich los legen eine kurze `Vorstellung - Who am I?`.  Das bin ich. Das Bild zieht sich inzwischen durch all meine
-Accounts im Internet. Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/Electricmaxx).
 Bevor wir wirklich los legen eine kurze `Vorstellung`.  Das bin ich. Das Bild zieht sich inzwischen durch all meine
 Accounts im Internet. Sowohl auf Twitter (point: @ElectricMaxxx) als auch auf Github (https://github.com/ElectricMaxxx).
 In beiden Portalen lohnt es sich mir zu folgen. Auf Github sieht man meine eigentlich meine stark PHP lastigen
@@ -29,7 +27,7 @@ in JavaScript. Doch schauen wir uns erst einmal die `History` an.
 Mitte der 2000er (sagt man so?) haben `Erik Mejer` und `Brian Backman` bei Microsoft ein Cloud Programming
 Team gegründet. In dem Team befand sich auch
 [Mathew Podwysocki](https://twitter.com/mattpodwysocki) `=> images/contributers_rxjs.png`
-Die Jungs hatten in dem Projekt den schönen Effekt, dass sie unbegrenztes Budget hatte.
+Die Jungs hatten in dem Projekt den schönen Effekt, dass sie unbegrenztes Budget hatten.
 Sie sollten eigentlich die Cloud ergründen und bauten dabei fast aus Zufall die Reactive Extension.
 Dort und im Nachgang wird auch als `LINQ to Events` bezeichnet.
 Ich bin ja hier auf einer .net lastigen Konferenz, da muss ich wohl nicht groß erklären was 
@@ -97,7 +95,7 @@ Doch nun erst einmal...
 
 Ich möchte euch kurz die Akteure vorstellen:
 
-Das `Iterator Pattern` => `TODO: UML Image = > #2` beschreibt einen Einheitlichen Umgang mit Array, Collections oder
+Das `Iterator Pattern`beschreibt einen Einheitlichen Umgang mit Array, Collections oder
 oder Ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
 Schauen wir uns einmal an, wie das aussehen könnte:
 
@@ -272,6 +270,7 @@ oder man wirft ein Blick in die Github Organisation unter der alles zusammen gef
 `https://github.com/Reactive-Extension`. Doch was mach diese Vereinigung nun aus? Mit Rx kann sich ein 
 Observer nun auf einen `Stream von Events` subscriben. Um diesen Stream zu begrenzen werden von den Observables
 Operatoren bereit gestellt, den Stream für ein Observer manipulieren oder filtern können. Aus
+
 ```javascript
 var list = [1, 2, 3, 4, 5];
 
@@ -430,6 +429,7 @@ euch jetzt einmal die Bilder. Bleiben wir lieber bei den Fakten - also dem Code.
 Fangen wir einmal mit einer einfachen Methode zum Erzeugen an - `Rx.Observable.create()`. Dieser Methode
 übergibt man eine Constructor Funktion, die selbst den Observer als Parameter bekommt.
 
+
 ```javascript
 var source = Rx.Observable.create(function (observer) {
   observer.onNext(42);
@@ -541,6 +541,7 @@ var disposal = merged.subscribe(function (x) {
 
 Was gibt das wohl? Richtig ...
 
+
 ```
 > Concat onNext: 1
 > Concat onNext: 2
@@ -581,7 +582,7 @@ Gibt das dann wirklich, was man von einem Merge erwarted:
 > Merged onNext: 10
 ```
 
-Die Werte werden direkt in einander gefädelt. (Streams => #4?)
+Die Werte werden direkt in einander gefädelt.
 
 Wertemengen lassen sich aber nicht nur Vergrößern. So kann man mit `.filter()`
 beispielsweise nur bestimmte Werte im Stream durch lassen:
@@ -608,16 +609,18 @@ für den Wert entscheidet. Das Resultat sähe dann so aus:
 > onNext: 8
 > onNext: 10
 ```
+
 Nun noch zu den sogenannten Projektionen. Das Funktionen, die Werte im Stream für
 nachfolgende Operatoren oder den Observer selbst in ein anderes Format bringen kann. Dabei wirken sich
 Änderungen nicht auf Andere Observer aus. Das heißt das folgende Beispiel:
 
 ```
 var list = [
-    {id: 1, title: 'Kill Bill 1'},
-    {id: 2, title: 'Kill Bill 2'},
-    {id: 3, title: 'Titanic'}
+    {id: 100001, name: 'Piña Colada', zutaten: [], prozent: 5.0 },
+    { id: 100002, name: ' Tequila Sunrise', zutaten: [], prozent: 6.0 },
+    { id: 100003, name: ' Long Island', zutaten: [], prozent: 7.0 },
 ];
+
 
 var source = Rx.Observable.from(list);
 
@@ -680,8 +683,6 @@ wird. Diese ergeben dann nacheinander folgenden Output:
 Es gibt noch viele weitere Operatoren um auf den Observalbes zu arbeiten. Eine gute
 Zusmmenfassung findet man nach Kategorien getrennt unter
 `https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/categories.md`
-
-* * Das Kuckukskind - Subject => erst mal aus lassen, schauen wo ich zeitlich lande
 
 Nun noch zu einem kontroversen Thema. Inzwischen verwenden eine Vielzahl von JavaScript-Familien
 `Promises` um mit asynchronen Aufgaben umgehen zu können. Doch warum kommt jetzt Famile RxJS mit etwas neum daher?
