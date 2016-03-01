@@ -672,9 +672,9 @@ Note: Die Signatur ist hier Startwert und die Anzahl der Schritte. Das gibt dann
 > onNext: 4
 > onNext: 5
 ```
-Note: 
-Hiermit lässt sich ganz einfach sequentielles in ein Observable packen. Doch interessanter wird es mit 
-Methoden, die Events oder Asynchrones in Observables transformieren. Angefangen von ... KLICK
+Note: Hiermit lässt sich ganz einfach sequentielles in ein Observable packen. Doch interessanter wird es mit 
+      Methoden, die Events oder Asynchrones in Observables transformieren. Angefangen von ... KLICK
+      
 ---
 
 ```javascript
