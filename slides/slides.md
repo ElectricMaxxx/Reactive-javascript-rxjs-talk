@@ -442,23 +442,24 @@ Note: Das sieht jetzt ein wenig mehr Schreibarbeit für die Ausgabe eines Arrays
       
 ---
 
-<!-- .slide: data-background="https://upload.wikimedia.org/wikipedia/commons/d/da/Kindergarten_kids_at_a_public_school_in_Montevideo%2C_Uruguay.jpg" -->
+<!-- .slide: data-background="../docs/images/kinder.jpg" -->
 
 <span class="attribution">By Vince Alongi (Flickr) [<a href="http://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AKindergarten_kids_at_a_public_school_in_Montevideo%2C_Uruguay.jpg">via Wikimedia Commons</a></span>
 
 Note: ... Die gemeinsamen Kinder. Die Flitterwochen waren noch nicht einmal ganz vorüber, da standen relativ kurz nacheinander
           die Geburt zweier Kids an. Beide haben ihre eigenen Eigenschaften und Funktionen. So wie die kleine Prizessin daheim lieber mit 
           ihren Pferden spielt und der Lausebub sich gern mit seinen Kumpels rauft. Die Geschlechterzuweisung in der
-          Realität lasse ich jetzt einmal offen. Die Eigenschaften möchte ich euch jetzt einmal schnell an kurzen
+          Realität lasse ich jetzt einmal offen. Die Eigenschaften möchte ich euch an kurzen
           Schnipseln demonstrieren. Ich werde die Slides natürlich zugänglich machen. D.h. damit hat
           man dann auch eine gute Zusammenfassung der wichtigsten Funktionen.
+          
           So dann schauen wir uns die Racker mal an ... KLICK
 
 ---
 
 # Observer
 
-Note: ... Wenn also der `Observer`, wie obn im Beispiel nicht nur aus Callbacks, besteht, also so ...
+Note: ... Wenn also der `Observer`, wie im Beispiel nicht nur aus Callbacks, ...
 
 ---
 
@@ -471,7 +472,7 @@ var disposal = source.subscribe(
 ```
 
 Note: ... sollte er Methoden implementieren, die vom Observalbe Object aufgeufn werden können um über neue Werte, 
-      über einen Fehler oder über das Ende zu informieren: ...
+      über einen Fehler oder über das Ende zu informieren. Das ist ja schon Bestandteil des Observer Pattern.
 
 ---
 
@@ -723,7 +724,7 @@ Note: Das ist zwar jetzt nur die Existenz aber der reine Zugriff ließe sich dam
 
 ---
 
-<!-- .slide: data-background="https://upload.wikimedia.org/wikipedia/commons/2/2f/Kinderarbeit.jpg" -->
+<!-- .slide: data-background="../docs/images/Kinderarbeit.jpg" -->
 
 <span class="attribution">von Unbekannt [Public domain], <a href="https://commons.wikimedia.org/wiki/File%3AKinderarbeit.jpg">via Wikimedia Commons</a></span>
 
@@ -988,12 +989,52 @@ Note: `Promises` um mit asynchronen Aufgaben umgehen zu können. Doch warum komm
      Wer aber doch Promisses verwenden will und daraus Obserables bauen will, dem bietet sich eine `.fromPromise()` Methode.
      Diese lässt zwar dann auch nur einen Wert an den Observer durch. Man könnte diesen aber mit anderen Streams concatenieren
      oder mergen. Besteht der Stream dann eh nur aus einem Wert, so kann man kann man den Observer dann mit `.toPromise()`
-     wieder in ein Promise zurück transformieren.
-     So nun wollen wir doch mal Famile RxJS in Aktion sehen ... KLICK
+     wieder in ein Promise zurück transformieren. Ein weiterer Punkt ist ... KLICK
+     
+---
+
+# Array Operatoren
+### vs.
+# Rx Operatoren
+
+Note:  Was ist jetzt der Unterschied? 
 
 ---
 
-<!-- .slide: data-background="https://upload.wikimedia.org/wikipedia/commons/6/62/Thw_Betonkettensaege_in_aktion.jpg" -->
+## Array Operatoren
+
+* Komplette Liste wird durch gereicht
+* dabei auf jedem Eintrag
+* * Projektion - map, ..
+* * Gefiltert - reduce, filter
+* * Ergänzt - concat, merge
+
+Note: Bei Array Operatoren wird immer das Ganze Array von Oben nach Unten durch gereicht. Dazu wird auf jedem
+      Eintrag dann die Projektion (map, ..), der Filter, oder eine Kombination angewendet. Jedes dieser Element hat als
+      Resultat wiederum eine neues Array - eben mit abgeänderten/gefilterten/ergänzten Werten.
+      ... KLICK
+
+---
+
+## Rx Opertoren
+
+* Jedes Event/Jeder Eintrag einzeln
+* dabei
+* * Projektion - map, ..
+* * Gefiltert - reduce, filter
+* * Ergänzt - concat, merge
+* Filter = STOP => nicht weiter gereicht
+* Ergänzung nur der Zugang für weiteren Stream
+
+Note: Bei Rx wird immer wenn ein Event im Stream ist, genau dieses Event einmal durch gepushed. Genau dieses
+      wird verändert (Projektion) oder gefiltert. Bei einer Kombination wird ein weiterer Stream angeschlossen, aus
+      dem jetzt einzelnen Events kommen ...
+      So nun wollen wir doch mal Famile RxJS in Aktion sehen ... KLICK
+
+---
+
+
+<!-- .slide: data-background="../docs/images/Thw_Betonkettensaege_in_aktion.jpg" -->
 # Action
 <span class="attribution">von Thiemo Schuff (Eigenes Werk) [<a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AThw_Betonkettensaege_in_aktion.jpg">via Wikimedia Commons</a></span>
 
@@ -1090,7 +1131,7 @@ Note: Hier hängen wir jetzt nur noch die Ergebnisse, oder auch den Fehler, in e
 
 ---
 
-<!-- .slide: data-background="https://upload.wikimedia.org/wikipedia/commons/2/2a/X6029_-_Tr%C3%A4skofiol_-_ok%C3%A4nd_tillverkare_-_foto_Mikael_Bodner.jpg" -->
+<!-- .slide: data-background="../docs/images/fiddle.jpg" -->
 # js fiddle
 <span class="attribution">By Musik- och teatermuseet (Own work) [<a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AX6029_-_Tr%C3%A4skofiol_-_ok%C3%A4nd_tillverkare_-_foto_Mikael_Bodner.jpg">via Wikimedia Commons</a></span>
 
@@ -1107,3 +1148,22 @@ Note:  Browser => jsfidle => show Result + Console
 ---
 
 # Thank You!
+
+---
+
+# Links
+
+- [Slides in Markdown](https://github.com/ElectricMaxxx/Reactive-javascript-rxjs-talk/blob/master/slides/slides.md), Slideshare folgt
+- [RxJS docs](https://github.com/Reactive-Extensions/RxJS/tree/master/doc)
+- [Marbles](http://rxmarbles.com)
+- [Liste an Tutorials]( http://reactivex.io/tutorials.html)
+- [Repository](https://github.com/Reactive-Extensions/RxJS)
+- [Ausführliches Tutorial](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+- [Video Tutorials](https://egghead.io/technologies/rx)
+- [Buch](http://www.introtorx.com/)
+
+#### Alternativen
+- [cyclejs](https://t.co/4BYrlRXlzo)
+- [BACONJS](https://baconjs.github.io/)
+
+---
