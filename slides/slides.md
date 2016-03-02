@@ -1,8 +1,8 @@
 ## Reactive JavaScript mit RxJS - BASTA! 2016
 #### Maximilian Berghoff - 23.03.2016
 
-Note:  Wollen wir loslegen?
-Bevor wir wirklich los legen eine kurze ....
+Note: Wollen wir loslegen?
+      Bevor wir wirklich los legen eine kurze ....
 
 KLICK
 
@@ -18,10 +18,10 @@ KLICK
 
 Note: Das bin ich. Das Bild zieht sich inzwischen durch all meine
       Accounts im Internet. Sowohl auf Twitter...
-      KLICK (point: @ElectricMaxxx) als auch auf Github ...
-      KLICK (https://github.com/ElectricMaxxx). In beiden Portalen lohnt es sich mir zu folgen.
+      KLICK (point: @ElectricMaxxx) als auch auf Github ... KLICK
+      (https://github.com/ElectricMaxxx). Trotze des Bildes lohnt es sich in beiden Portalen mir zu folgen.
       Auf Github sieht man meine eigentlich meine stark PHP lastigen
-      Repositories. Das ist aber nur die halbe Wahrheit. In meiner Firma (Mayflower) übernehme
+      Repositories. (CMF) Das ist aber nur die halbe Wahrheit. In meiner Firma (Mayflower) übernehme
       ich immer wieder Frontend Application oder führe Workshops durch. Mit Frontend
       meine ich jetzt aber nicht dieses Design Krams. Aber wir sind ja heute nicht wegen mir hier ...
       KLICK
@@ -30,7 +30,7 @@ Note: Das bin ich. Das Bild zieht sich inzwischen durch all meine
 
 # Reactive Extensions - Rx
 
-Note: Nun zum Thema : Im groben geht es heute ja eigentlich um `Reactive Extensions - Rx` Im Speziellen um die Implementierung
+Note: Nun zum Thema : Im groben geht es heute um `Reactive Extensions - Rx` Im Speziellen um die Implementierung
       in JavaScript. Doch schauen wir uns erst einmal die ...
       KLICK
 
@@ -42,10 +42,10 @@ Note: Nun zum Thema : Im groben geht es heute ja eigentlich um `Reactive Extensi
 ## Brain Backman <!-- .element: class="fragment" -->
 ## Mathew Podwysocki <!-- .element: class="fragment" -->
 
-Note: ... `History` an.
+Note: ... Geschichte an.
       Mitte der 2000er (sagt man so?) haben `Erik Mejer` und `Brian Backman` bei Microsoft ein Cloud Programming
       Team gegründet. In dem Team befand sich auch
-      [Mathew Podwysocki](https://twitter.com/mattpodwysocki)
+      [Mathew Podwysocki](https://twitter.com/mattpodwysocki), den man nicht vergessen sollte, weil ...
       KLICK
 
 ---
@@ -54,7 +54,7 @@ Note: ... `History` an.
 
 Note: Die Jungs hatten in dem Projekt den schönen Effekt, dass sie unbegrenztes Budget hatten.
       Sie sollten eigentlich die Cloud ergründen und bauten dabei fast aus Zufall die Reactive Extension.
-      Dort und im Nachgang wird auch als ... KLICK
+      Dort und im Nachgang werden sie auch als ... KLICK
 
 ---
 
@@ -62,8 +62,9 @@ Note: Die Jungs hatten in dem Projekt den schönen Effekt, dass sie unbegrenztes
 
 Note: ... `LINQ to Events` bezeichnet.
       Ich bin ja hier auf einer .net lastigen Konferenz, da muss ich wohl nicht groß erklären was 
-      LINQ ist, oder? (Innerhalb von .net einheitliche Methode um auf Daten zuzugreifen - Language Integrated Query)
-      Doch wie ist das geschehen? Es begann mit einem Projekt mit dem Namen ... KLICK
+      LINQ ist, oder? (Innerhalb von .net einheitliche Methode um auf Daten zuzugreifen
+      - Language Integrated Query)
+      Doch wie kamen die Jungs dazu? Es begann mit einem Projekt mit dem Namen ... KLICK
 
 ---
 
@@ -71,7 +72,7 @@ Note: ... `LINQ to Events` bezeichnet.
 
 ![Volta](../docs/images/volta.jpeg)
 
-Note: ... `Volta` Es sollte wohl Applications
+Note: ... `Volta`. Das hat Nichts mit dem Physiker zu tun. Es sollte Applikationen
       plattformunabhängig kompilierbar machen. So kam es dazu, dass man versuchte ... KLICK
 
 ---
@@ -80,19 +81,19 @@ Note: ... `Volta` Es sollte wohl Applications
 # <=> <!-- .element: class="fragment" -->
 # Web Forms <!-- .element: class="fragment" -->
 
-Note: ... Windows Forms` in `Web Forms`
-      mit Hilfe von HTML und JavaScript für die "Plattform" Web zu kompilieren. Doch das Web ist asynchron. 
+Note: ... `Windows Forms` ... KLICK ...  in ... KLICK ... `Web Forms` umzuwandeln.
+      Die Zielplatform ist also das Web mit HTML + JavaScript. Doch das Web ist asynchron. 
       Promises gab es noch nicht. Also stand man in der wohlbekannten asynchronen Hölle. Dazu kommen Events
       bspw. in Ajax Calls mehr als Metadaten vor. ... KLICK
 
 ---
 
 ## Beispiel:
-# Drag & Drop
-## Mausbewegung verfolgen
+# Drag & Drop <!-- .element: class="fragment" -->
+## Mausbewegung verfolgen <!-- .element: class="fragment" -->
 
-Note: Schauen wir uns doch einmal ein simples `Drag&Drop` an - und noch einfacher:
-      davon einfach nur die Mausbewegung, das heißt wir müssen ... KLICK
+Note: Schauen wir uns doch einmal ein Beispiel an: ... KLiCK  `Drag&Drop` an - und noch einfacher:
+      ... KLiCK ...  davon einfach nur die Mausbewegung, das heißt wir müssen ... KLICK
 
 ---
 
@@ -116,7 +117,7 @@ function mousedown(e) {
     state = { startX: e.offsetX, startY: e.offsetY};
 }
 ```
-Note .. Mouse down, als man beginnt zu klicken ... KLICK
+Note: ... Mouse down, also man beginnt zu klicken ... KLICK
 
 ---
 
