@@ -160,28 +160,29 @@ function dispose() {
 }
 ```
 
-Note: ... sich wieder lösen vom Listener. Hier den Überblick zu behalten ist schon schwer und kommt einem Jonglieren
-      von State und Event schon nahe. Dazu kommen jetzt wohl noch interaction mit einer API oder local storages usw.
-      Doch nun erst einmal an ... KLICK
+Note: ... sich wieder zu Lösen - vom Listener. Hier den Überblick zu behalten ist schon schwer und kommt einem Jonglieren
+      von State und Event schon nahe. Dazu kommen jetzt wohl noch interaction mit einer API oder local storages usw - 
+      alles asynchron. Doch nun erst einmal an ... KLICK
 
 ---
 
 <!-- .slide: data-background="../docs/images/bar.jpg" -->
 
-Note: ... die Bar ... KLICK
+Note: ... die Bar. Es sieht auf dem Bild zwar gerade leer aus, aber am Abend treffen sich hier ... KLICK
 
 ---
 
 # Die Akteure
 
-Note: ... Ich möchte euch kurz die Akteure vorstellen: ... KLICK
+Note: ... Die Akteuere unseres heutigen Stückes. Ich möchte sie euch vorstellen: ... KLICK
 
 ---
 
 # Iterator Pattern
 
-Note: Das `Iterator Pattern`beschreibt einen Einheitlichen Umgang mit Array, Collections oder
-      oder Ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur gedanken zu machen.
+Note: Das `Iterator Pattern`. Es beschreibt einen Einheitlichen Umgang mit Array, Collections oder
+      oder Ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur Gedanken 
+      machen zu müssen.
       Schauen wir uns einmal an, wie das aussehen könnte: ... KLICK
 
 ---
@@ -201,8 +202,8 @@ Iterator.prototype.hasNext();
 Note: Hinter solch einem Objekt steckt ja meist immer irgend ein Liste. Man kann sich damit den aktuellen Wert
       Ausgeben lassen auf den gerade ein Zeiger zeigt, man kann den Zeiger um eins nach vorne Stellen, man
       kann erfragen ob es noch einen nächsten gibt, oder gar den Zeiger auf Anfang zurück setzen. Dabei ist die
-      Idee mit dem Zeiger schon wieder ein Teil, der mich als Nutzer eines Iterators schon nicht interessieren sollte.
-      Aber, mit einer Kombination aus `.next()` und `.hasNext()` lässt sich nun relativ einfach traversieren.
+      Idee mit dem Zeiger schon wieder ein Teil der Implementierung, der mich als Nutzer eines Iterators schon nicht interessieren sollte.
+      Aber, mit einer Kombination aus `.next()` und `.hasNext()` ließe sich nun relativ einfach traversieren.
       ... KLICK
 
 ---
@@ -216,17 +217,15 @@ while (Iterator.hasNext()) {
 ```
 
 Note: Das Handling von Collections wird aber nicht nur durch das Iterator Pattern bestimmt. So lassen sich auf
-      solche Listen auch wunderbar Queries durch absetzen. Stellen wir uns mal folgende
-      Aufgabe vor:
-      ... KLICK
+      solche Listen auch wunderbar Queries absetzen. Stellen wir uns mal folgende Aufgabe vor: ... KLICK
 
 ---
 
 # Gedankenspiel
 
-- Liste von Contails <!-- .element: class="fragment" -->
+- Liste von Cocktails <!-- .element: class="fragment" -->
 - Eigenschaften: id, name, zutaten, prozent, ... <!-- .element: class="fragment" -->
-- Aufgabe: "Trage id & name von allem Contails mit prozent > 5.0% zusammen" <!-- .element: class="fragment" -->
+- Aufgabe: "id & name von allem Contails mit prozent > 5.0" <!-- .element: class="fragment" -->
 
 Note: `Liste von Cocktails => trage id + name von Cocktails mit mehr als 5.0% Alc zusammen`
        Das heißt wir haben eine Liste wie:
@@ -289,8 +288,8 @@ var newList =
 console.log(newList);
 ```
 
-Note: ... HIer wir jetzt schon ein funktionaler Ansatz verwendet. `.reduce()` liefert nur noch die
-      Einträge zurück für die true zurück gegeben wird. Map transformiert das Ergebnis. 
+Note: ... Hier wir jetzt schon ein funktionaler Ansatz verwendet. `.reduce()` liefert nur noch die
+      Einträge zurück für die `true` zurück gegeben wird. `.map()` transformiert das Ergebnis. 
       Im Grunde läuft jeder Wert einmal von oben nach unten durch, wenn er an reduce vorbei kommt natürlich.
       Was dieses Vorghen aumacht: Es ist Pull basiert. Das heißt Werte, die man haben will holt man sich aus der
       Liste filtert Diese und sucht sich dann noch die richtigen Properties raus.
@@ -300,11 +299,11 @@ Note: ... HIer wir jetzt schon ein funktionaler Ansatz verwendet. `.reduce()` li
 
 # Observer Pattern
 
-Note: `Observer Pattern`, als zweiten Akteur.
-      Dieses beschreibt die Verbindung zwischen einem Beobachteten Objekt und seinen Beobachtern.
-      Dabei wird eher ein bestimmter Status-Wechsel beobachtet
-      als das Objekt an sich. Bei dem beobachteten Object spricht man von dem Subject oder Observable 
-      (engl. beobachtbar). Dieses stellt eine Methode zum Registrieren berereit. ... KLICK
+Note: Das `Observer Pattern`, als zweiten Akteur an der Bar.
+      Dieses beschreibt die Verbindung zwischen einem Beobachteten Objekt - dem Subject oder Observable -
+      und seinen Beobachtern - dem Observer.
+      Dabei wird eher ein bestimmter Status-Wechsel beobachtet. Das Observable Objekt stellt dem Observer
+      eine Methode zum Registrieren berereit. ... KLICK
 
 ---
 
@@ -313,7 +312,7 @@ Observable.prototype.subscribe()
 ```
 
 Note: `Observable.prototype.subscribe()` könnte solch
-      ein Interface aussehen. Nun meldet ein Beobachter - auch Observer genannt - also Interesse an dem Observable an.
+      ein Interface aussehen. Nun meldet ein Observer Interesse an dem Observable an.
       Damit der Observable den Observer über Änderungen informieren kann, muss der Observer wiederum eine Methode zum
       Mitteilen implementieren. Die könnte beispielsweise ... KLICK
 
