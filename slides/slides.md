@@ -390,7 +390,7 @@ Note: `Reactive Extensions` gemeinsame Wege zu gehen. Zu zweit leben Sie im `Plu
 
 ---
 
-# [Reactive.io](http://reactivex.io/)
+# [reactivex.io](http://reactivex.io/)
 
 Note: `http://reactivex.io/` besuchen. Dort findet man viele Beispiel und Tutorials.
       Oder man wirft ein Blick in die Github Organisation unter der alles zusammen gefasst ist:
@@ -939,6 +939,7 @@ var subscription = source.subscribe(
         console.log('onNext: ' + x);
     }
 );
+```
 
 Note: Was kann das wohl ergeben? Das äußere Observable Object ist eine Range von 1 bis 2. Das
       heißt es fließen beide Werte aus ihm heraus. Diese Landen dann im inneren Observable Objekt
