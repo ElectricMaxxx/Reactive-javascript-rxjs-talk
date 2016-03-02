@@ -1,5 +1,5 @@
 ## Reactive JavaScript mit RxJS - BASTA! 2016
-#### Maximilian Berghoff - 23.03.2016
+#### Maximilian Berghoff - 02.03.2016
 
 Note: Wollen wir loslegen?
       Bevor wir wirklich los legen eine kurze ....
@@ -13,18 +13,18 @@ KLICK
 - Maximilian Berghoff <!-- .element: class="fragment" -->
 - @ElectricMaxxx <!-- .element: class="fragment" -->
 - github.com/electrimaxxx <!-- .element: class="fragment" -->
-- Maximilian.Berghoff@mayflower.de <!-- .element: class="fragment" -->
 - Mayflower GmbH - Würzburg <!-- .element: class="fragment" -->
+- Maximilian.Berghoff@mayflower.de <!-- .element: class="fragment" -->
 
 Note: Das bin ich. Das Bild zieht sich inzwischen durch all meine
       Accounts im Internet. Sowohl auf Twitter...
       KLICK (point: @ElectricMaxxx) als auch auf Github ... KLICK
-      (https://github.com/ElectricMaxxx). Trotze des Bildes lohnt es sich in beiden Portalen mir zu folgen.
-      Auf Github sieht man meine eigentlich meine stark PHP lastigen
+      (https://github.com/ElectricMaxxx). Trotz des Bildes lohnt es sich mir in beiden Portalen zu folgen.
+      Auf Github sieht man meine meine stark PHP lastigen
       Repositories. (CMF) Das ist aber nur die halbe Wahrheit. In meiner Firma (Mayflower) übernehme
-      ich immer wieder Frontend Application oder führe Workshops durch. Mit Frontend
-      meine ich jetzt aber nicht dieses Design Krams. Aber wir sind ja heute nicht wegen mir hier ...
-      KLICK
+      ich Consulting für Frontend Themen. Wenn es das Projekt zulässt dann eben auch da. Mit Frontend
+      meine ich jetzt aber nicht dieses Design Krams.
+      Aber wir sind ja heute nicht wegen mir hier ... KLICK
 
 ---
 
@@ -54,7 +54,7 @@ Note: ... Geschichte an.
 
 Note: Die Jungs hatten in dem Projekt den schönen Effekt, dass sie unbegrenztes Budget hatten.
       Sie sollten eigentlich die Cloud ergründen und bauten dabei fast aus Zufall die Reactive Extension.
-      Dort und im Nachgang werden sie auch als ... KLICK
+      Das wird auch als ... KLICK
 
 ---
 
@@ -93,7 +93,8 @@ Note: ... `Windows Forms` ... KLICK ...  in ... KLICK ... `Web Forms` umzuwandel
 ## Mausbewegung verfolgen <!-- .element: class="fragment" -->
 
 Note: Schauen wir uns doch einmal ein Beispiel an: ... KLiCK  `Drag&Drop` an - und noch einfacher:
-      ... KLiCK ...  davon einfach nur die Mausbewegung, das heißt wir müssen ... KLICK
+      ... KLiCK ...  davon einfach
+       nur die Mausbewegung, das heißt wir müssen ... KLICK
 
 ---
 
@@ -104,6 +105,7 @@ elem.addEventListener('mousedown', mousedown, false);
 elem.addEventListener('mouseup', mouseup, false);
 elem.addEventListener('mousemove', mousemove, false);
 ```
+
 Note: ... Die Event Listener Registrieren, um das klicken, bewegen und loslassen der Maus zu erfassen. Dazu implementieren wir die Funktionen
       für die Callbacks: ... KLICK
       
@@ -161,20 +163,20 @@ function dispose() {
 ```
 
 Note: ... sich wieder zu Lösen - vom Listener. Hier den Überblick zu behalten ist schon schwer und kommt einem Jonglieren
-      von State und Event schon nahe. Dazu kommen jetzt wohl noch interaction mit einer API oder local storages usw - 
+      von State und Event schon nahe. Dazu kommen jetzt wohl noch Interaction mit einer API oder local storages usw - 
       alles asynchron. Doch nun erst einmal an ... KLICK
 
 ---
 
 <!-- .slide: data-background="../docs/images/bar.jpg" -->
 
-Note: ... die Bar. Es sieht auf dem Bild zwar gerade leer aus, aber am Abend treffen sich hier ... KLICK
+Note: ... die Bar. Es sieht auf dem Bild zwar gerade leer aus, aber am Abend treffen sich hier immer ... KLICK
 
 ---
 
 # Die Akteure
 
-Note: ... Die Akteuere unseres heutigen Stückes. Ich möchte sie euch vorstellen: ... KLICK
+Note: ... Die zwei Akteuere unseres heutigen Stückes. Ich möchte sie euch vorstellen: ... KLICK
 
 ---
 
@@ -182,7 +184,7 @@ Note: ... Die Akteuere unseres heutigen Stückes. Ich möchte sie euch vorstelle
 
 Note: Das `Iterator Pattern`. Es beschreibt einen Einheitlichen Umgang mit Array, Collections oder
       oder Ähnlichem. Mit Umgang meine ich das Traversieren der Einträge ohne sich über die Strucktur Gedanken 
-      machen zu müssen.
+      machen zu müssen. 
       Schauen wir uns einmal an, wie das aussehen könnte: ... KLICK
 
 ---
@@ -204,7 +206,7 @@ Note: Hinter solch einem Objekt steckt ja meist immer irgend ein Liste. Man kann
       kann erfragen ob es noch einen nächsten gibt, oder gar den Zeiger auf Anfang zurück setzen. Dabei ist die
       Idee mit dem Zeiger schon wieder ein Teil der Implementierung, der mich als Nutzer eines Iterators schon nicht interessieren sollte.
       Aber, mit einer Kombination aus `.next()` und `.hasNext()` ließe sich nun relativ einfach traversieren.
-      ... KLICK
+      Also spreche ich den Iterator einfach an ... KLICK
 
 ---
 
@@ -262,6 +264,7 @@ console.log(newList);
 Note: Ja .. naiv würde man so erst einmal eine Liste durch wühlen und auswerten, besser ... KLICK
 
 ---
+
 ```javascript
 var newList = [];
 cocktails.forEach(function (cocktail) {
@@ -276,23 +279,22 @@ Note: Wäre jetzt schon eine Array-Funktion dafür zu verwenden. Aber richtig co
 ---
 
 ```javascript
-var newList =
-    cocktails
-        .reduce(function (cocktail) {
-            return cocktail.prozent > 5.0;
-        })
-        .map(function (cocktail) {
-           return  {id: cocktail.id, title: cocktail.title};
-        });
-
-console.log(newList);
+var godOnes = cocktails
+	.filter(function (cocktail) {
+  	return cocktail.prozent > 5;
+  })
+  .map(function (cocktail) {
+  	return {id: cocktail.id, name: cocktail.name};
+  });
 ```
 
-Note: ... Hier wir jetzt schon ein funktionaler Ansatz verwendet. `.reduce()` liefert nur noch die
-      Einträge zurück für die `true` zurück gegeben wird. `.map()` transformiert das Ergebnis. 
+Note: ... Hier haben wir jetzt einen funktionaler Ansatz verwendet. `.filter()` liefert nur noch die
+      Einträge zurück für die `true` zurück gegeben wird.  `.map()` transformiert das Ergebnis. 
       Im Grunde läuft jeder Wert einmal von oben nach unten durch, wenn er an reduce vorbei kommt natürlich.
       Was dieses Vorghen aumacht: Es ist Pull basiert. Das heißt Werte, die man haben will holt man sich aus der
-      Liste filtert Diese und sucht sich dann noch die richtigen Properties raus.
+      Liste filtert Diese und sucht sich dann noch die richtigen Properties raus. Es wird auch immer eine ganze Liste
+      durchlaufen. `.filter()` erstellt ein neues Array, auf welchen `.map()` dann arbeitet und selbst wiederum 
+      ein neues erstellt.
       Neben dem Iterator Pattern ging es ja auch noch um das ... KLICK
 
 ---
@@ -331,7 +333,7 @@ Note: `Observer.prototype.notify()` lauten.
 ```javascript
 var Observable = function () {};
 
-Observable.prototype.unsubscribe = function () {};
+Observable.prototype.subscribe = function () {};
 
 Observable.prototype.unsubscribe = function () {};
 
@@ -356,8 +358,8 @@ Note: `Was bringt einem das ganze?`. ... KLICK `Entkopplung` Man verhindert dann
       wir bei `Events`. Diese sind im Web Context das Mittel der Wahl um Informationen vom Observable zum 
       Observer zu übermitteln. So implementieren wir sog. Event Handler, also Callback-Funktionen, um auf
       Ereignisse im Browser reagieren zu können. Wir haben ja vorhin schon ein Beispiel dazu gesehen.
-      Nun kommt es wie es kommen musste. Der Abend in der Bar war zu schön. Beide Pattern lernten sich näher kennen
-      und es kam zur ... KLICK
+      Weiter in der Geschichte. Nun kommt es nämlich wie es kommen musste. Der Abend in der Bar war zu schön.
+      Beide Pattern lernten sich näher kennen und es kam zur ... KLICK
 
 ---
 
@@ -382,7 +384,7 @@ Note:... Sie entschieden sich dazu als sog. ... KLICK
 - Rx.Swift <!-- .element: class="fragment" -->
 - ... <!-- .element: class="fragment" -->
 
-Note: `Reactive Extensions` gemeinsame Wege zu gehen. Doch warum `Plural?`
+Note: `Reactive Extensions` gemeinsame Wege zu gehen. Zu zweit leben Sie im `Plural?`
       Nun, ... es gibt verschiedene Implementierungen KLICK KLICK
       Wenn man sich einen Überblick verschaffen will sollte man mal die Website ... KLICK
 
@@ -390,8 +392,8 @@ Note: `Reactive Extensions` gemeinsame Wege zu gehen. Doch warum `Plural?`
 
 # [Reactive.io](http://reactivex.io/)
 
-Note: `http://reactivex.io/` besuchen
-      oder man wirft ein Blick in die Github Organisation unter der alles zusammen gefasst ist:
+Note: `http://reactivex.io/` besuchen. Dort findet man viele Beispiel und Tutorials.
+      Oder man wirft ein Blick in die Github Organisation unter der alles zusammen gefasst ist:
 
 ---
 
@@ -404,9 +406,10 @@ Note: https://github.com/Reactive-Extension`. Doch was mach diese Vereinigung nu
 
 # Stream von Events
 
-Note: `Stream von Events` subscriben. Um diesen Stream zu begrenzen werden von den Observables
-      Operatoren bereit gestellt, den Stream für ein Observer manipulieren oder filtern können.
-      Aus ... 
+Note: `Stream von Events` subscriben. Entgegen den Arrays von vorhin heißt das aber nicht, dass man sofort alle Events 
+       "abrufen" kann, sondern man bekommt Sie wenn sie in der Pipe auftauchen. Um diesen Stream zu begrenzen werden
+       von den Observables Operatoren bereit gestellt, den Stream für ein Observer manipulieren oder filtern können.
+       Aus ... 
 
 ---
 
@@ -417,7 +420,7 @@ list.forEach(function (item) {
     console.log("nexItem: %s", item);
 });
 ```
-Note: ... Wird jetzt ...
+Note: ..., und wir nehmen, dann doch wieder das Array-Beispiel, wird jetzt ... KLICK
 
 ---
 
@@ -569,6 +572,9 @@ Disposable.prototype.dispose = function () { ... }
 
 function Observable() { }
 
+/**
+ * @return Disposable
+ */
 Observable.prototype.subscribe = function (observer) { ... }
 ```
 
@@ -594,8 +600,8 @@ Note:  Youtube-Channel eingerichtet ...
 
 # (Er-) Zeugung
 
-Note: `(Er-) Zeugung`. Ich erspare
-      euch jetzt einmal die Bilder. Bleiben wir lieber bei den Fakten - also dem Code.
+Note: `(Er-) Zeugung`.
+      Ich erspare euch jetzt einmal die Bilder. Bleiben wir lieber bei den Fakten - also dem Code.
       Fangen wir einmal mit einer einfachen Methode zum Erzeugen an  ... KLICK
 
 ---
@@ -628,7 +634,7 @@ subscription.dispose();
 ```
 
 Note: Damit erhält eine neue Observable Instanz. Diese muss eine Funktion zurückgeben, die im Falle eines dispose
-      Aufrufs ausgeführt wird. Das ganze hat etwas von einem Destrktor. Es gillt als Konvention, dass kein weiterer
+      Aufrufs ausgeführt wird. Das ganze hat etwas von einem Destruktor. Es gillt als Konvention, dass kein weiterer
       onNext() Call mehr nach dem onCompleted() kommen kann. Übrigens die Ausgabe sähe dann so aus: ... KLICK
 
 ---
@@ -1147,10 +1153,6 @@ Note:  Browser => jsfidle => show Result + Console
 
 ---
 
-# Thank You!
-
----
-
 # Links
 
 - [Slides in Markdown](https://github.com/ElectricMaxxx/Reactive-javascript-rxjs-talk/blob/master/slides/slides.md), Slideshare folgt
@@ -1163,7 +1165,12 @@ Note:  Browser => jsfidle => show Result + Console
 - [Buch](http://www.introtorx.com/)
 
 #### Alternativen
-- [cyclejs](https://t.co/4BYrlRXlzo)
+- [cyclejs](http://cycle.js.org/)
 - [BACONJS](https://baconjs.github.io/)
 
 ---
+
+# Thank You!
+
+---
+

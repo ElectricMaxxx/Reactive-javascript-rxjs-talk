@@ -24,13 +24,12 @@ cocktails.forEach(function (cocktail) {
 
 console.log(newList);
 
-var newList =
-    cocktails
-        .reduce(function (cocktail) {
-            return cocktail.rating === 5.0;
-        })
-        .map(function (cocktail) {
-           return  {id: cocktail.id, title: cocktail.title};
-        });
+var godOnes = cocktails
+    .filter(function (cocktail) {
+        return cocktail.prozent > 5;
+    })
+    .map(function (cocktail) {
+        return {id: cocktail.id, name: cocktail.name};
+    });
 
-console.log(newList);
+console.log(godOnes);
